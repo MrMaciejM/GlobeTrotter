@@ -6,7 +6,7 @@ import "./Currency.css";
 // to make a call
 // fetch("https://api.apilayer.com/fixer/convert?to=to&from=from&amount=amount", requestOptions)
 
-// IMPORTANT NOTE: while testing please be mindful of API calls - monthly limit is 100! I made 5 calls, so that leaves us with 95. If we run out, sign up with an account on
+// IMPORTANT NOTE: while testing please be mindful of API calls - monthly limit is 100! I made < 15 calls. If we run out, sign up with an account on
 // https://fixer.io/
 // and update the API key.
 
@@ -15,18 +15,42 @@ function Currency() {
   const [amount, setAmount] = useState("");
   const [countryFrom, setCountryFrom] = useState("");
   const [countryTo, setCountryTo] = useState("");
-  const [currencyRate, setCurrencyRate] = useState("");
-  const [exchangedRate, setExchangedRate] = useState("");
+  let [currencyRate, setCurrencyRate] = useState("");
+  let [exchangedRate, setExchangedRate] = useState("");
 
   // form
   const formSubmitHandler = (e) => {
     e.preventDefault();
 
+    // api call
+    var myHeaders = new Headers();
+    myHeaders.append("apikey", "hZn9Q1SDwhkak9rt1BHg0Iw018U8OgTl");
+
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+      headers: myHeaders,
+    };
+
+    fetch(
+      `https://api.apilayer.com/fixer/convert?to=${countryTo}&from=${countryFrom}&amount=${amount}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        l(data);
+        //l(result.info.rate);
+        //l(data.result);
+        let resultRate = data.info.rate;
+        let resultExchangedRate = data.result;
+        setCurrencyRate(resultRate);
+        setExchangedRate(resultExchangedRate);
+      })
+      .catch((error) => console.log("error", error));
+
     setAmount(amount);
     setCountryFrom(countryFrom);
     setCountryTo(countryTo);
-    setCurrencyRate("1.255433");
-    setExchangedRate("1.777755");
 
     //l("clicked");
     // l(setAmount(amount));
@@ -60,7 +84,7 @@ function Currency() {
             onChange={(e) => {
               setAmount(e.target.value);
             }}
-            type="text"
+            type="number"
             placeholder="0"
           />
         </div>
