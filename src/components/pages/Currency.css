@@ -35,6 +35,16 @@ button:active {
   background-color: #b3b3b3;
 }
 
+.errorMsg {
+  color: red;
+  font-weight: 600;
+}
+
+.fetchMsg {
+  color: lime;
+  font-weight: 600;
+}
+
 /* Currency Dashboard */
 .dashboardContainer {
   display: flex;

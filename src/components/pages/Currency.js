@@ -17,6 +17,8 @@ function Currency() {
   const [countryTo, setCountryTo] = useState("");
   let [currencyRate, setCurrencyRate] = useState("");
   let [exchangedRate, setExchangedRate] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [fetchMsg, setFetchMsg] = useState("");
 
   // form
   const formSubmitHandler = (e) => {
@@ -25,6 +27,8 @@ function Currency() {
     // api call
     var myHeaders = new Headers();
     myHeaders.append("apikey", "hZn9Q1SDwhkak9rt1BHg0Iw018U8OgTl");
+    // API keys in order of usage:
+    // hZn9Q1SDwhkak9rt1BHg0Iw018U8OgTl - <= 20 times used
 
     var requestOptions = {
       method: "GET",
@@ -34,7 +38,8 @@ function Currency() {
 
     fetch(
       `https://api.apilayer.com/fixer/convert?to=${countryTo}&from=${countryFrom}&amount=${amount}`,
-      requestOptions
+      requestOptions,
+      setFetchMsg("Fetching... please wait")
     )
       .then((response) => response.json())
       .then((data) => {
@@ -45,36 +50,20 @@ function Currency() {
         let resultExchangedRate = data.result;
         setCurrencyRate(resultRate);
         setExchangedRate(resultExchangedRate);
+        setFetchMsg("Request completed");
+        setErrorMsg("");
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => {
+        // error msg
+        console.log(error);
+        setErrorMsg("Error: failed to fetch, please try again in a moment.");
+      });
 
     setAmount(amount);
     setCountryFrom(countryFrom);
     setCountryTo(countryTo);
-
-    //l("clicked");
-    // l(setAmount(amount));
-    // l(setAmount(from));
-    // l(setAmount(to));
   };
 
-  // api call
-  // var myHeaders = new Headers();
-  // myHeaders.append("apikey", "hZn9Q1SDwhkak9rt1BHg0Iw018U8OgTl");
-
-  // var requestOptions = {
-  //   method: "GET",
-  //   redirect: "follow",
-  //   headers: myHeaders,
-  // };
-
-  // fetch(
-  //   "https://api.apilayer.com/fixer/convert?to=GBP&from=EUR&amount=1",
-  //   requestOptions
-  // )
-  //   .then((response) => response.text())
-  //   .then((result) => l(result))
-  //   .catch((error) => console.log("error", error));
   return (
     <main className="currencyMain">
       <form onSubmit={formSubmitHandler}>
@@ -109,6 +98,22 @@ function Currency() {
           />
         </div>
         <button type="submit">Submit</button>
+        <p
+          className="fetchMsg"
+          onChange={() => {
+            setFetchMsg(fetchMsg);
+          }}
+        >
+          {fetchMsg}
+        </p>
+        <p
+          className="errorMsg"
+          onChange={() => {
+            setErrorMsg(errorMsg);
+          }}
+        >
+          {errorMsg}
+        </p>
       </form>
 
       {/* currency dashboard */}
