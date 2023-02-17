@@ -1,35 +1,32 @@
 
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 function Translate() {
 
-  const [textData, setTextData] = useState("");
-  const [translatedText, setTranslatedText] = useState("");
+  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const onSubmit = data => {
 
-  const handleChange = e => {
-    setTextData(e.target.value);
-    console.log(textData)
-  };
+    console.log(data);
 
-  const translationURL = "https://api.nlpcloud.io/v1/";
-  const model = "nllb-200-3-3b";
-  const token = "bd536901bfa41da98ff64fa781ec429635aded9c";
-  const rootURL = translationURL + model;
+    const translationURL = "https://api.nlpcloud.io/v1/";
+    const model = "nllb-200-3-3b/";
+    const token = "bd536901bfa41da98ff64fa781ec429635aded9c";
+    const translationURLPart = "translation"
+    const rootURL = translationURL + model + translationURLPart;
 
-  const headersObj = {
-    Authorization: "Token " + token,
-    "User-Agent": "nlpcloud-javascript-client"
-  }
+    const headersObj = {
+      Authorization: "Token " + token,
+      "User-Agent": "nlpcloud-javascript-client"
+    }
 
-  const payload = {
-    text: textData,
-    source: "",
-    target: "eng_Latn"
-  };
+    const payload = {
+      text: data.textRequired,
+      source: "",
+      target: "eng_Latn",
+    };
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    fetch("https://api.nlpcloud.io/v1/nllb-200-3-3b/translation", {
+    fetch(rootURL, {
       method: "POST",
       headers: headersObj,
       body: JSON.stringify(payload),
@@ -40,16 +37,20 @@ function Translate() {
         setTranslatedText(data["translation_text"]);
 
       });
-  }
+  };
 
+  console.log(watch("textRequired"));
 
+  const [translatedText, setTranslatedText] = useState("");
 
   return (
     <main>
       <h1>Translate</h1>
-      <form onSubmit={handleSubmit}>
-        <textarea placeholder="Enter phrase to translate here" name="text" rows={5} cols={25} onChange={handleChange}></textarea>
-        <button type="submit">Translate</button>
+
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <textarea rows={10} cols={5} {...register("textRequired", { required: true })} />
+        {errors.textRequired && <p>This field is required</p>}
+        <input type="submit" value="Translate" />
       </form>
       {translatedText ? <h2>{translatedText}</h2> : ""}
     </main>
