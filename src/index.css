@@ -4,3 +4,6 @@
   box-sizing: border-box;
 }
 
+body, html, #root {
+  height: 100%;
+}
