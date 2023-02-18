@@ -1,47 +1,54 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import supportedlan from "../supportedLanguages.json"
+
+console.log(supportedlan)
 
 function Translate() {
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
+
+  const [translatedText, setTranslatedText] = useState("");
+
+  const [detectedLang, setDetectedLang] = useState("");
+
   const onSubmit = data => {
 
     console.log(data);
+    
+    const encodedParams = new URLSearchParams();
+    encodedParams.append("q", data.textRequired);
+    encodedParams.append("format", "text");
+    encodedParams.append("target", "en");
 
-    const translationURL = "https://api.nlpcloud.io/v1/";
-    const model = "nllb-200-3-3b/";
-    const token = "bd536901bfa41da98ff64fa781ec429635aded9c";
-    const translationURLPart = "translation"
-    const rootURL = translationURL + model + translationURLPart;
-
-    const headersObj = {
-      Authorization: "Token " + token,
-      "User-Agent": "nlpcloud-javascript-client"
-    }
-
-    const payload = {
-      text: data.textRequired,
-      source: "",
-      target: "eng_Latn",
+    const options = {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded',
+        'Accept-Encoding': 'application/gzip',
+        'X-RapidAPI-Key': 'ba4297ccadmsh81359987f2544c5p104fa9jsn6bf3224d7a19',
+        'X-RapidAPI-Host': 'google-translate1.p.rapidapi.com'
+      },
+      body: encodedParams
     };
 
-    fetch(rootURL, {
-      method: "POST",
-      headers: headersObj,
-      body: JSON.stringify(payload),
-    })
+    fetch('https://google-translate1.p.rapidapi.com/language/translate/v2', options)
       .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        setTranslatedText(data["translation_text"]);
+      .then(responseData => {
+        console.log(responseData);
 
-      });
+        const resultObj = supportedlan.text.find(obj => obj.code === responseData.data.translations[0].detectedSourceLanguage);
+        const supportedLanuage = resultObj.language;
+
+        setTranslatedText(responseData.data.translations[0].translatedText);
+        setDetectedLang(supportedLanuage ? supportedLanuage : "Unable to find language name")
+      })
+      .catch(err => console.error(err));
   };
 
   console.log(watch("textRequired"));
 
-  const [translatedText, setTranslatedText] = useState("");
 
   return (
     <main>
@@ -52,7 +59,12 @@ function Translate() {
         {errors.textRequired && <p>This field is required</p>}
         <input type="submit" value="Translate" />
       </form>
-      {translatedText ? <h2>{translatedText}</h2> : ""}
+      {translatedText && (
+        <div>
+          <h2>Detected language: {detectedLang}</h2>
+          <h2>{translatedText}</h2>
+        </div>
+      )}
     </main>
   );
 }
