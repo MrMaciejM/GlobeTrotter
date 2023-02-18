@@ -1,16 +1,35 @@
-import { NavLink } from 'react-router-dom';
+
+import Sidebar from './Sidebar';
+
+import { Flex, Spacer, Box, Heading } from '@chakra-ui/react'
+
 
 function Header() {
+
+  const stylesObj = {
+    header: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: "2px 5px"
+    },
+    Sidebar: {
+      padding: "5px"
+    },
+    h1: {
+
+    }
+  }
+
   return (
-    <header>
-      <h1>Header</h1>
-      <nav>
-        <NavLink to='/'>Landing</NavLink>
-        <NavLink to='/translate'>Translate</NavLink>
-        <NavLink to='/currency'>Currency</NavLink>
-        <NavLink to='/landmarks'>Landmarks</NavLink>
-      </nav>
-    </header>
+    <Flex as="header" align="center" p="1">
+      <Box>
+        <Sidebar />
+      </Box>
+      <Box flex="1" textAlign="center">
+        <Heading>Travel App</Heading>
+      </Box>
+    </Flex>
   );
 }
 
