@@ -22,7 +22,7 @@ function Header() {
   return (
     <header style={stylesObj.header}>
       <Sidebar />
-      {/* <h1>Travel App</h1> */}
+      <h1>Travel App</h1>
     </header>
   );
 }
