@@ -1,15 +1,28 @@
-import { NavLink } from 'react-router-dom';
+
+import Sidebar from './Sidebar';
+
 
 function Header() {
+
+  const stylesObj = {
+    header: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: "2px 5px"
+    },
+    Sidebar: {
+      padding: "5px"
+    },
+    h1: {
+
+    }
+  }
+
   return (
-    <header>
-      <h1>Header</h1>
-      <nav>
-        <NavLink to='/'>Landing</NavLink>
-        <NavLink to='/translate'>Translate</NavLink>
-        <NavLink to='/currency'>Currency</NavLink>
-        <NavLink to='/landmarks'>Landmarks</NavLink>
-      </nav>
+    <header style={stylesObj.header}>
+      <Sidebar />
+      {/* <h1>Travel App</h1> */}
     </header>
   );
 }
