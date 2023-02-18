@@ -1,6 +1,8 @@
 
 import Sidebar from './Sidebar';
 
+import { Flex, Spacer, Box, Heading } from '@chakra-ui/react'
+
 
 function Header() {
 
@@ -20,10 +22,14 @@ function Header() {
   }
 
   return (
-    <header style={stylesObj.header}>
-      <Sidebar />
-      <h1>Travel App</h1>
-    </header>
+    <Flex as="header" align="center" p="1">
+      <Box>
+        <Sidebar />
+      </Box>
+      <Box flex="1" textAlign="center">
+        <Heading>Travel App</Heading>
+      </Box>
+    </Flex>
   );
 }
 
