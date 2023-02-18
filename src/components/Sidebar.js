@@ -9,7 +9,7 @@ import {
     Button,
     Flex,
 } from "@chakra-ui/react";
-import { CloseIcon } from "@chakra-ui/icons";
+// import { CloseIcon } from "@chakra-ui/icons";
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -37,10 +37,10 @@ function Sidebar() {
                     </Flex>
                     <DrawerBody pb="4">
                         <Flex mt={10} gap={10} flexDirection="column">
-                            <Button mx="0" w="100%" colorScheme="teal" as={Link} to="/">Home</Button>
-                            <Button colorScheme="teal" as={Link} to="/translate">Translate</Button>
-                            <Button colorScheme="teal" as={Link} to="/currency">currency</Button>
-                            <Button colorScheme="teal" as={Link} to="/landmarks">landmarks</Button>
+                            <Button as={Link} to="/">Home</Button>
+                            <Button as={Link} to="/translate">Translate</Button>
+                            <Button as={Link} to="/currency">Currency</Button>
+                            <Button as={Link} to="/landmarks">Landmarks</Button>
                         </Flex>
                     </DrawerBody>
                 </DrawerContent>
