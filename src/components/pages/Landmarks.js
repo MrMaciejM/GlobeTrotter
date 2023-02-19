@@ -1,3 +1,5 @@
+import ShareASuggestion from "../ShareASuggestion";
+
 function Landmarks() {
   return (
     <main>
