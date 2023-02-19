@@ -28,7 +28,7 @@ function Sidebar() {
     return (
         <>
             <Button bg="transparent" size="lg" p={1} leftIcon={<FontAwesomeIcon icon={faBars} />} variant="solid" onClick={onOpen}></Button>
-            <Drawer  isFullHeight={true} closeOnOverlayClick={true} closeOnEsc={true} size="md" isOpen={isOpen} placement="left" onClose={onClose}>
+            <Drawer isFullHeight={true} closeOnOverlayClick={true} closeOnEsc={true} size="md" isOpen={isOpen} placement="left" onClose={onClose}>
                 <DrawerOverlay />
                 <DrawerContent maxW="300px">
                     <Flex justifyContent="center" alignItems="center">
