@@ -1,41 +1,4 @@
-.currencyMain {
-  /* background-color: gray; */
-  text-align: center;
-  font-family: sans-serif;
-  margin: 1rem 0;
-}
-/* FORM STYLING */
-form {
-  display: grid;
-}
-form div {
-  display: grid;
-  margin-bottom: 1rem;
-}
-form label {
-  font-size: 1.4rem;
-}
-
-button,
-input {
-  margin: 1rem auto;
-  padding: 0.2rem;
-  border-radius: 7px;
-  border: none;
-  outline: solid 1px black;
-}
-input {
-  width: 50%;
-  margin: 0.2rem auto;
-}
-button {
-  cursor: pointer;
-}
-button:active {
-  background-color: #b3b3b3;
-}
-
-.errorMsg {
+/* .errorMsg {
   color: red;
   font-weight: 600;
 }
@@ -43,17 +6,4 @@ button:active {
 .fetchMsg {
   color: lime;
   font-weight: 600;
-}
-
-/* Currency Dashboard */
-.dashboardContainer {
-  display: flex;
-  justify-content: center;
-  column-gap: 8rem;
-  margin-top: 3rem;
-  text-align: center;
-}
-.dashboardContainer div {
-  font-size: 1.2rem;
-  text-align: center;
-}
+} */

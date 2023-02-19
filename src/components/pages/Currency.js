@@ -1,4 +1,3 @@
-
 import { Container, Heading, SimpleGrid, Box, Center } from "@chakra-ui/layout";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
@@ -12,36 +11,38 @@ import exchangeIcon from "../icons/exchange.gif";
 import CurrencyConversionCard from "../CurrencyConvertCard";
 
 import RecentConversionsTable from "../RecentConversionsTable";
-import { setLocalStorage_RecentConversions } from "../helperFuncs/setLocalStorage_RecentConversions"
+import { setLocalStorage_RecentConversions } from "../helperFuncs/setLocalStorage_RecentConversions";
 
-
-// import "./Currency.css";
-//import { useState } from "react";
 // API key for APILayer currency:
 // hZn9Q1SDwhkak9rt1BHg0Iw018U8OgTl
 // to make a call
 // fetch("https://api.apilayer.com/fixer/convert?to=to&from=from&amount=amount", requestOptions)
 
-// IMPORTANT NOTE: while testing please be mindful of API calls - monthly limit is 100! I made < 15 calls. If we run out, sign up with an account on
+// IMPORTANT NOTE: while testing please be mindful of API calls - monthly limit is 100! I made < 20 calls. If we run out, sign up with an account on
 // https://fixer.io/
 // and update the API key.
 
 function Currency() {
-  var l = console.log;
   const [amount, setAmount] = useState("");
   const [countryFrom, setCountryFrom] = useState("");
   const [countryTo, setCountryTo] = useState("");
-  let [currencyRate, setCurrencyRate] = useState("");
-  let [exchangedRate, setExchangedRate] = useState("");
+  const [currencyRate, setCurrencyRate] = useState("");
+  const [exchangedRate, setExchangedRate] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [fetchMsg, setFetchMsg] = useState("");
 
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
 
   const [isLoadingBtn, setIsLoadingBtn] = useState(false);
 
-  const [tableData, setTableData] = useState(JSON.parse(localStorage.getItem("RecentConversions")) || []);
-
+  const [tableData, setTableData] = useState(
+    JSON.parse(localStorage.getItem("RecentConversions")) || []
+  );
 
   // form
   const formSubmitHandler = (e) => {
@@ -51,9 +52,9 @@ function Currency() {
 
     setIsLoadingBtn(true);
 
-    // api call
+    // api call for currency
     var myHeaders = new Headers();
-    myHeaders.append("apikey", "hZn9Q1SDwhkak9rt1BHg0Iw018U8OgTl");
+    myHeaders.append("apikey", "aaa");
     // API keys in order of usage:
     // hZn9Q1SDwhkak9rt1BHg0Iw018U8OgTl - <= 20 times used
 
@@ -70,16 +71,14 @@ function Currency() {
     )
       .then((response) => response.json())
       .then((data) => {
-        l(data);
-        //l(result.info.rate);
-        //l(data.result);
         let resultRate = data.info.rate;
         let resultExchangedRate = data.result;
 
         const updatedTableData = setLocalStorage_RecentConversions(
           `${data.query.amount} (${data.query.from})`,
           `${data.result} (${data.query.to})`,
-          `${data.info.rate} on ${data.date}`);
+          `${data.info.rate} on ${data.date}`
+        );
 
         setTimeout(() => {
           setCurrencyRate(resultRate);
@@ -87,12 +86,13 @@ function Currency() {
           setFetchMsg("Request completed");
           setErrorMsg("");
           setTableData(updatedTableData);
-          setIsLoadingBtn(false)
+          setIsLoadingBtn(false);
         }, 5000);
       })
       .catch((error) => {
         // error msg
         console.log(error);
+        setFetchMsg("");
         setErrorMsg("Error: failed to fetch, please try again in a moment.");
       });
 
@@ -103,14 +103,23 @@ function Currency() {
 
   return (
     <Container p="10px" maxW="100vw" as="section" className="currencyMain">
-
-      <Heading as="h2" mb="8" textAlign="center">Currency Convertor</Heading>
+      <Heading as="h2" mb="8" textAlign="center">
+        Currency Convertor
+      </Heading>
 
       <SimpleGrid minChildWidth="350px">
         <Box m="2" display="flex" justifyContent="center" alignItems="center">
           <form as="form" onSubmit={handleSubmit(formSubmitHandler)}>
-            <Box px="2" display="flex" flexDirection="column" justifyContent="center" alignItems="center" gap="2">
-              <FormLabel minW="300px">Amount
+            <Box
+              px="2"
+              display="flex"
+              flexDirection="column"
+              justifyContent="center"
+              alignItems="center"
+              gap="2"
+            >
+              <FormLabel minW="300px">
+                Amount
                 <Input
                   id="amount"
                   isRequired={true}
@@ -123,7 +132,8 @@ function Currency() {
                 />
               </FormLabel>
 
-              <FormLabel minW="300px">From
+              <FormLabel minW="300px">
+                From
                 <Input
                   id="from"
                   isRequired={true}
@@ -133,9 +143,11 @@ function Currency() {
                   }}
                   type="text"
                   placeholder="EUR"
-                /></FormLabel>
+                />
+              </FormLabel>
 
-              <FormLabel minW="300px">To
+              <FormLabel minW="300px">
+                To
                 <Input
                   id="to"
                   isRequired={true}
@@ -145,7 +157,8 @@ function Currency() {
                   }}
                   type="text"
                   placeholder="GBP"
-                /></FormLabel>
+                />
+              </FormLabel>
 
               <Button
                 colorScheme="whiteAlpha"
@@ -156,8 +169,16 @@ function Currency() {
                 my="5"
                 type="submit"
                 value="Convert"
-                spinner={<img style={{ maxHeight: "3ch" }} src={exchangeIcon} alt="loading" />}
-              >Submit</Button>
+                spinner={
+                  <img
+                    style={{ maxHeight: "3ch" }}
+                    src={exchangeIcon}
+                    alt="loading"
+                  />
+                }
+              >
+                Submit
+              </Button>
               <p
                 className="fetchMsg"
                 onChange={() => {
@@ -186,28 +207,12 @@ function Currency() {
             amount={amount || 0}
             result={exchangedRate || 0}
             exRate={currencyRate || 0}
-          /></Center>
-        {/* <div className="dashboardContainer">
-          <div>
-            <h5>Amount</h5>
-            <p>{amount}</p>
-          </div>
-          <div>
-            <h5>From</h5>
-            <p>{countryFrom}</p>
-          </div>
-          <div>
-            <h5>Rate</h5>
-            <p>{currencyRate}</p>
-          </div>
-          <div>
-            <h5>To</h5>
-            <p>{countryTo}</p>
-            <p>{exchangedRate}</p>
-          </div>
-        </div> */}
+          />
+        </Center>
       </SimpleGrid>
-      <Center mx="auto" my="10" maxW="800px"><RecentConversionsTable tableData={tableData} /></Center>
+      <Center mx="auto" my="10" maxW="800px">
+        <RecentConversionsTable tableData={tableData} />
+      </Center>
     </Container>
   );
 }
