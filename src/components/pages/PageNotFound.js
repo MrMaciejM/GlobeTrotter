@@ -31,8 +31,17 @@ function PageNotFound() {
 
     return (
         <Card
-        bgImage={cardBg} bgRepeat="no-repeat" bgPosition="center" bgSize="cover" minW="100%" minH="100%"
-        display="flex" alignitems="center" justifyContent="space-evenly" textAlign="center">
+        p="2"
+        bgImage={cardBg}
+        bgRepeat="no-repeat"
+        bgPosition="center"
+        bgSize="cover"
+        minW="100%"
+        minH="100%"
+        display="flex"
+        alignitems="center"
+        justifyContent="space-evenly"
+        textAlign="center">
             <Heading fontWeight="extrabold" as="i" >{currentMessage && currentMessage}</Heading>
             <ShareASuggestion />
         </Card>
