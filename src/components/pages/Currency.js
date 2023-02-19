@@ -108,7 +108,7 @@ function Currency() {
 
       <SimpleGrid minChildWidth="350px">
         <Box m="2" display="flex" justifyContent="center" alignItems="center">
-          <form as="form" onSubmit={handleSubmit(formSubmitHandler)}>
+          <form onSubmit={handleSubmit(formSubmitHandler)}>
             <Box px="2" display="flex" flexDirection="column" justifyContent="center" alignItems="center" gap="2">
               <FormLabel minW="300px">Amount
                 <Input
