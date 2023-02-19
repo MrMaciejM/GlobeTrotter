@@ -1,37 +1,42 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Box, Flex, Input, Button, Link, Heading } from '@chakra-ui/react';
+import { ExternalLinkIcon } from '@chakra-ui/icons';
+import WeatherIcon from 'react-open-weather-icons';
+
+import Clock from '../Clock.js';
 
 function Landing() {
-  const [storedData, setStoredData] = useState({});
+  const [storedData, setStoredData] = useState(null);
   const [searchData, setSearchData] = useState(''); // user input
   // URL to pull in single city image
   const [imgUrl, setImgUrl] = useState('');
   const [newsData, setNewsData] = useState(null);
 
-  // useEffect(() => {
-  //   if (Object.keys(storedData).length === 0) {
-  //     return;
-  //   }
-  //   const getNews = async () => {
-  //     const newsResponse = await axios.get(
-  //       'https://newsapi.org/v2/everything',
-  //       {
-  //         params: {
-  //           q: storedData.cityName,
-  //           apiKey: '66a24015f83f414aad84ea0d18eaaccd',
-  //           sources: 'bbc-news,cnn',
-  //           pageSize: 5,
-  //           language: 'en',
-  //           sortBy: 'relevancy',
-  //           searchIn: 'content',
-  //         },
-  //       }
-  //     );
-  //     console.log('newsResponse', newsResponse.data);
-  //     setNewsData(newsResponse.data.articles);
-  //   };
-  //   getNews();
-  // }, [storedData]);
+  useEffect(() => {
+    if (storedData === null) {
+      return;
+    }
+    const getNews = async () => {
+      const newsResponse = await axios.get(
+        'https://newsapi.org/v2/everything',
+        {
+          params: {
+            q: storedData.cityName,
+            apiKey: '66a24015f83f414aad84ea0d18eaaccd',
+            sources: 'bbc-news,cnn',
+            pageSize: 5,
+            language: 'en',
+            sortBy: 'relevancy',
+            searchIn: 'content',
+          },
+        }
+      );
+      console.log('newsResponse', newsResponse.data);
+      setNewsData(newsResponse.data.articles);
+    };
+    getNews();
+  }, [storedData]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -83,7 +88,10 @@ function Landing() {
           weatherIcon: weatherAndTimeZoneResponse.data.weather[0].icon,
           currentTemp: weatherAndTimeZoneResponse.data.main.temp,
           weatherDescription:
-            weatherAndTimeZoneResponse.data.weather[0].description,
+            weatherAndTimeZoneResponse.data.weather[0].description
+              .charAt(0)
+              .toUpperCase() +
+            weatherAndTimeZoneResponse.data.weather[0].description.slice(1),
         });
       } catch (error) {
         console.log(error);
@@ -119,7 +127,7 @@ function Landing() {
 
   return (
     <main>
-      <form onSubmit={handleSubmit}>
+      {/* <form onSubmit={handleSubmit}>
         <input
           type='text'
           name='city'
@@ -127,22 +135,57 @@ function Landing() {
           value={searchData}
           onChange={(event) => setSearchData(event.target.value)}
         />
-      </form>
-      <img alt='city' src={imgUrl} />
-      {/* {newsData.length > 0 ? (
-        <ul>
-          {newsData.map((article, i) => (
-            <li key={i}>
-              {article.title}{' '}
-              <a href={article.url} target='_blank'>
-                link
-              </a>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No articles</p>
-      )} */}
+      </form> */}
+      <Box maxW='1200px' mx='auto' px={4} my={4}>
+        <Box w={{ base: '100%', md: '70%', lg: '60%' }} mx='auto'>
+          <form onSubmit={handleSubmit}>
+            <Flex alignItems='center'>
+              <Input
+                type='text'
+                name='city'
+                placeholder='Enter city...'
+                value={searchData}
+                onChange={(event) => setSearchData(event.target.value)}
+              />
+              <Button type='submit' ml={2}>
+                Search
+              </Button>
+            </Flex>
+          </form>
+        </Box>
+      </Box>
+
+      {storedData && (
+        <Box maxW='1200px' mx='auto' px={4} my={4}>
+          <p>
+            {storedData.cityName + ', ' + storedData.countryCode.toUpperCase()}
+          </p>
+          <Clock timezone={storedData.timezone} />
+          <WeatherIcon name={storedData.weatherIcon} className='weatherIcon' />
+          <p>{storedData.weatherDescription}</p>
+          <p>{Math.round(storedData.currentTemp) + '°C'}</p>
+          <img alt='city' src={imgUrl} />
+          {storedData && !newsData ? (
+            <p>Fetching news...</p>
+          ) : newsData.length === 0 ? (
+            <p>No news</p>
+          ) : (
+            <div>
+              <Heading as='h4' size='md'>
+                Related news:
+              </Heading>
+              {newsData.map((article, i) => (
+                <li key={i}>
+                  {article.title}{' '}
+                  <Link href={article.url} isExternal color='orange.500'>
+                    Article <ExternalLinkIcon mx='2px' />
+                  </Link>
+                </li>
+              ))}
+            </div>
+          )}
+        </Box>
+      )}
     </main>
   );
 }
