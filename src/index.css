@@ -1,3 +1,4 @@
+/* resets */
 * {
   margin: 0;
   padding: 0;
@@ -8,5 +9,27 @@ body,
 html,
 #root {
   height: 100%;
+}
+
+/* base styles */
+#root {
   background-color: lightskyblue;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+.weatherIcon {
+  height: 50px;
+  width: 50px;
+}
+
+footer {
+  text-align: center;
+}
+footer p {
+  padding: 15px;
 }
