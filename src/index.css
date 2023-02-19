@@ -1,3 +1,4 @@
+/* resets */
 * {
   margin: 0;
   padding: 0;
@@ -8,10 +9,11 @@ body,
 html,
 #root {
   height: 100%;
-  background-color: lightskyblue;
 }
 
+/* base styles */
 #root {
+  background-color: lightskyblue;
   display: flex;
   flex-direction: column;
 }
