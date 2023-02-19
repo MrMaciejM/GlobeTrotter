@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import supportedlan from "../supportedLanguages.json";
@@ -58,7 +58,7 @@ function Translate() {
         const resultObj = supportedlan.text.find(obj => obj.code === responseData.data.translations[0].detectedSourceLanguage);
         const supportedLanuage = resultObj.language || "Unable to find language name";
         const returnedTranslation = responseData.data.translations[0].translatedText;
-        const updatedTableData = setLocalStorage_RecentTranslations(originalText, supportedLanuage, returnedTranslation)
+        const updatedTableData = setLocalStorage_RecentTranslations(originalText, supportedLanuage, returnedTranslation);
 
         setTimeout(() => {
           setTranslatedText(returnedTranslation);
