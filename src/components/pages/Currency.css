@@ -30,6 +30,7 @@ input {
 }
 button {
   cursor: pointer;
+  background-color: red;
 }
 button:active {
   background-color: #b3b3b3;

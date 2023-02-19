@@ -1,6 +1,5 @@
-import { useState } from "react";
-// import "./Currency.css";
-//import { useState } from "react";
+import React, { useState } from "react";
+import "./Currency.css";
 // API key for APILayer currency:
 // hZn9Q1SDwhkak9rt1BHg0Iw018U8OgTl
 // to make a call
@@ -15,18 +14,18 @@ function Currency() {
   const [amount, setAmount] = useState("");
   const [countryFrom, setCountryFrom] = useState("");
   const [countryTo, setCountryTo] = useState("");
-  let [currencyRate, setCurrencyRate] = useState("");
-  let [exchangedRate, setExchangedRate] = useState("");
+  const [currencyRate, setCurrencyRate] = useState("");
+  const [exchangedRate, setExchangedRate] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [fetchMsg, setFetchMsg] = useState("");
 
-  // form
+  // FORM for CURRENCY DASHBOARD
   const formSubmitHandler = (e) => {
     e.preventDefault();
 
-    // api call
+    // api call for currency
     var myHeaders = new Headers();
-    myHeaders.append("apikey", "hZn9Q1SDwhkak9rt1BHg0Iw018U8OgTl");
+    myHeaders.append("apikey", "aaa");
     // API keys in order of usage:
     // hZn9Q1SDwhkak9rt1BHg0Iw018U8OgTl - <= 20 times used
 
@@ -56,6 +55,7 @@ function Currency() {
       .catch((error) => {
         // error msg
         console.log(error);
+        setFetchMsg("");
         setErrorMsg("Error: failed to fetch, please try again in a moment.");
       });
 
