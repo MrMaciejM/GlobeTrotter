@@ -9,7 +9,7 @@ function CurrencyConversionCard({ fromCurrency, toCurrency, amount, result, exRa
 
 
     return (
-        <Card display="flex" justifyContent="space-around" minH="55%" minW="55%" mb="100" p={4} bgImage={cardBg} bgRepeat="no-repeat" bgPosition="center" bgSize="cover">
+        <Card display="flex" justifyContent="space-around" minH="55%" minW="320px" mb="100" p={4} bgImage={cardBg} bgRepeat="no-repeat" bgPosition="center" bgSize="cover">
             <Box>
                 <Text fontWeight="bold" mb={2}>
                     {fromCurrency} to {toCurrency}

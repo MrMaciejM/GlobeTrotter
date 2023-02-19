@@ -102,15 +102,15 @@ function Currency() {
   };
 
   return (
-    <Container size="md" p="10px" maxW="90vw" as="section" className="currencyMain">
+    <Container p="10px" maxW="100vw" as="section" className="currencyMain">
 
       <Heading as="h2" mb="8" textAlign="center">Currency Convertor</Heading>
 
-      <SimpleGrid columns={[1, 2]}>
+      <SimpleGrid minChildWidth="350px">
         <Box m="2" display="flex" justifyContent="center" alignItems="center">
           <form as="form" onSubmit={handleSubmit(formSubmitHandler)}>
             <Box px="2" display="flex" flexDirection="column" justifyContent="center" alignItems="center" gap="2">
-              <FormLabel w="300px">Amount
+              <FormLabel minW="300px">Amount
                 <Input
                   id="amount"
                   isRequired={true}
@@ -123,7 +123,7 @@ function Currency() {
                 />
               </FormLabel>
 
-              <FormLabel w="300px">From
+              <FormLabel minW="300px">From
                 <Input
                   id="from"
                   isRequired={true}
@@ -135,7 +135,7 @@ function Currency() {
                   placeholder="EUR"
                 /></FormLabel>
 
-              <FormLabel w="300px">To
+              <FormLabel minW="300px">To
                 <Input
                   id="to"
                   isRequired={true}
