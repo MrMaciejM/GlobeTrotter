@@ -110,9 +110,10 @@ function Currency() {
         <Box m="2" display="flex" justifyContent="center" alignItems="center">
           <form as="form" onSubmit={handleSubmit(formSubmitHandler)}>
             <Box px="2" display="flex" flexDirection="column" justifyContent="center" alignItems="center" gap="2">
-              <div>
-                <FormLabel>Amount</FormLabel>
+              <FormLabel w="300px">Amount
                 <Input
+                  id="amount"
+                  isRequired={true}
                   {...register("amountRequired", { required: true })}
                   onChange={(e) => {
                     setAmount(e.target.value);
@@ -120,29 +121,32 @@ function Currency() {
                   type="number"
                   placeholder="0"
                 />
-              </div>
-              <div>
-                <FormLabel>From</FormLabel>
+              </FormLabel>
+
+              <FormLabel w="300px">From
                 <Input
+                  id="from"
+                  isRequired={true}
                   {...register("fromRequired", { required: true })}
                   onChange={(e) => {
                     setCountryFrom(e.target.value.toUpperCase());
                   }}
                   type="text"
                   placeholder="EUR"
-                />
-              </div>
-              <div>
-                <FormLabel>To</FormLabel>
+                /></FormLabel>
+
+              <FormLabel w="300px">To
                 <Input
+                  id="to"
+                  isRequired={true}
                   {...register("toRequired", { required: true })}
                   onChange={(e) => {
                     setCountryTo(e.target.value.toUpperCase());
                   }}
                   type="text"
                   placeholder="GBP"
-                />
-              </div>
+                /></FormLabel>
+
               <Button
                 colorScheme="whiteAlpha"
                 maxW="350px"
