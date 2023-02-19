@@ -37,10 +37,10 @@ function Sidebar() {
                     </Flex>
                     <DrawerBody pb="4">
                         <Flex mt={10} gap={10} flexDirection="column">
-                            <Button onClick={() => onclose()} as={Link} to="/">Home</Button>
-                            <Button onClick={() => onclose()} as={Link} to="/translate">Translate</Button>
-                            <Button onClick={() => onclose()} as={Link} to="/currency">Currency</Button>
-                            <Button onClick={() => onclose()} as={Link} to="/landmarks">Landmarks</Button>
+                            <Link to="/" onClick={onClose}>Home</Link>
+                            <Link to="/translate" onClick={onClose}>Translate</Link>
+                            <Link to="/currency" onClick={onClose}>Currency</Link>
+                            <Link to="/landmarks" onClick={onClose}>Landmarks</Link>
                         </Flex>
                     </DrawerBody>
                 </DrawerContent>

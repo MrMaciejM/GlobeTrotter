@@ -10,3 +10,19 @@ html,
   height: 100%;
   background-color: lightskyblue;
 }
+
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+  text-align: center;
+}
+footer p {
+  padding: 15px;
+}

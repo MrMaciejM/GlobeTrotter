@@ -1,149 +1,96 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 function Landing() {
-  const [searchData, setSearchData] = useState(""); // user input
-  const [geodata, setGeodata] = useState({}); //coords
-  const [imageData, setImageData] = useState([]); // 5 images
-  const [newsData, setNewsData] = useState([]); // 5 articles
-  const [weatherData, setWeatherData] = useState({}); // info about right now
-  const [countryData, setCountryData] = useState({}); // grabbing currency and language data
-
+  const [storedData, setStoredData] = useState({});
+  const [searchData, setSearchData] = useState(''); // user input
   // URL to pull in single city image
-  const [imgUrl, setImgUrl] = useState("");
+  const [imgUrl, setImgUrl] = useState('');
+  const [newsData, setNewsData] = useState(null);
 
-  // big useEffect hook for when geodata is grabbed
-  useEffect(() => {
-    // if there's no geodata, i.e. first render, then do nothing
-    if (Object.keys(geodata).length === 0) {
-      console.log("no geodata!");
-      return;
-    }
-
-    // grab weather data
-    const getWeatherData = async () => {
-      const response = await axios.get(
-        "https://api.openweathermap.org/data/2.5/weather",
-        {
-          params: {
-            appid: "0e8f67bf6ac0e37689d7edea5f37f808",
-            lat: geodata.lat,
-            lon: geodata.lon,
-            units: "metric",
-          },
-        }
-      );
-      console.log("weatherResponse", response.data);
-      setWeatherData({
-        ...weatherData,
-        ["icon"]: response.data.weather[0].icon,
-        ["temp"]: response.data.main.temp,
-        ["description"]: response.data.weather[0].description,
-        ["timezone"]: response.data.timezone,
-        ["timestamp"]: response.data.dt,
-      });
-    };
-
-    getWeatherData();
-
-    // grab country data
-    const getCountryData = async () => {
-      const response = await axios.get(
-        `https://restcountries.com/v3.1/alpha/${countryData.countryCode}`
-      );
-      console.log("getCountryDataResponse", response.data[0]);
-
-      setCountryData({
-        ...countryData,
-        ["flagSvgUrl"]: response.data[0].flags.svg,
-        ["language"]: Object.values(response.data[0].languages)[0],
-        ["currencyCode"]: Object.keys(response.data[0].currencies)[0],
-      });
-    };
-
-    getCountryData();
-
-    // grab advisory data
-    const capitalisedCountryCode = countryData.countryCode.toUpperCase();
-    const getTravelAdvisoryData = async () => {
-      const response = await axios.get(
-        `https://www.travel-advisory.info/api?countrycode=${countryData.countryCode}`
-      );
-      console.log(
-        "travelAdvisoryResponse",
-        response.data.data[capitalisedCountryCode].advisory.score
-      );
-      setCountryData({
-        ...countryData,
-        ["travelAdvisoryScore"]:
-          response.data.data[capitalisedCountryCode].advisory.score,
-      });
-    };
-
-    getTravelAdvisoryData();
-
-    // grab news data
-    const getNews = async () => {
-      const response = await axios.get("https://newsapi.org/v2/everything", {
-        params: {
-          q: countryData.cityName,
-          apiKey: "66a24015f83f414aad84ea0d18eaaccd",
-          sources: "bbc-news,cnn",
-          pageSize: 5,
-          language: "en",
-          sortBy: "relevancy",
-          searchIn: "content",
-        },
-      });
-      console.log("newsResponse", response.data);
-      setNewsData(response.data.articles);
-    };
-
-    getNews();
-  }, [geodata]);
+  // useEffect(() => {
+  //   if (Object.keys(storedData).length === 0) {
+  //     return;
+  //   }
+  //   const getNews = async () => {
+  //     const newsResponse = await axios.get(
+  //       'https://newsapi.org/v2/everything',
+  //       {
+  //         params: {
+  //           q: storedData.cityName,
+  //           apiKey: '66a24015f83f414aad84ea0d18eaaccd',
+  //           sources: 'bbc-news,cnn',
+  //           pageSize: 5,
+  //           language: 'en',
+  //           sortBy: 'relevancy',
+  //           searchIn: 'content',
+  //         },
+  //       }
+  //     );
+  //     console.log('newsResponse', newsResponse.data);
+  //     setNewsData(newsResponse.data.articles);
+  //   };
+  //   getNews();
+  // }, [storedData]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("form submitted!");
-
+    console.log('form submitted!');
+    // if no text entered, do nothing
     if (searchData.length === 0) {
-      console.log("no text entered!");
+      console.log('no text entered!');
       return;
     }
-
-    const getGeoData = async () => {
-      const response = await axios.get(
-        "https://api.openweathermap.org/geo/1.0/direct",
-        {
-          params: {
-            appid: "0e8f67bf6ac0e37689d7edea5f37f808",
-            limit: 1,
-            q: searchData,
-          },
+    // async function to retieve city data
+    const getCityData = async () => {
+      try {
+        // get city data
+        const geoResponse = await axios.get(
+          'https://api.openweathermap.org/geo/1.0/direct',
+          {
+            params: {
+              appid: '0e8f67bf6ac0e37689d7edea5f37f808',
+              limit: 1,
+              q: searchData,
+            },
+          }
+        );
+        // if no response from api found, exit
+        if (geoResponse.data.length === 0) {
+          console.log('no result found!');
+          return;
         }
-      );
-      if (response.data.length === 0) {
-        console.log("no result found!");
-        return;
+        // get weather and timezone data
+        const weatherAndTimeZoneResponse = await axios.get(
+          'https://api.openweathermap.org/data/2.5/weather',
+          {
+            params: {
+              appid: '0e8f67bf6ac0e37689d7edea5f37f808',
+              lat: geoResponse.data[0].lat,
+              lon: geoResponse.data[0].lon,
+              units: 'metric',
+            },
+          }
+        );
+        console.log('weatherAndTimeZoneResponse', weatherAndTimeZoneResponse);
+        // put retrieved data into state variable as object
+        setStoredData({
+          cityName: geoResponse.data[0].name,
+          countryCode: geoResponse.data[0].country.toLowerCase(),
+          lat: geoResponse.data[0].lat,
+          lon: geoResponse.data[0].lon,
+          timezone: weatherAndTimeZoneResponse.data.timezone,
+          weatherIcon: weatherAndTimeZoneResponse.data.weather[0].icon,
+          currentTemp: weatherAndTimeZoneResponse.data.main.temp,
+          weatherDescription:
+            weatherAndTimeZoneResponse.data.weather[0].description,
+        });
+      } catch (error) {
+        console.log(error);
       }
-      console.log(response.data[0]);
-      setGeodata({
-        ...geodata,
-        ["lat"]: response.data[0].lat,
-        ["lon"]: response.data[0].lon,
-      });
-      setCountryData({
-        ...countryData,
-        ["cityName"]: response.data[0].name,
-        ["countryCode"]: response.data[0].country.toLowerCase(),
-      });
     };
-
-    console.log("searchData", searchData);
-
-    getGeoData();
-
-    console.log("geoData", geodata);
+    // call async-await fetch function
+    getCityData();
 
     // GET image of the city based on search input value
     // uSplash API: https://api.unsplash.com/
@@ -151,7 +98,7 @@ function Landing() {
     //Secret Key: 6JpWEchohX37O7UTFdTJOSOzw-h2oWcJAMJ1MCvuL9Q
     function getImage() {
       const citySearch = searchData;
-      const clientID = "6fEh-7tXr4Bzr12yxHDIN93ZeDnhTWDnRIZ49nxMRtY";
+      const clientID = '6fEh-7tXr4Bzr12yxHDIN93ZeDnhTWDnRIZ49nxMRtY';
       const endpoint = `https://api.unsplash.com/search/photos?query=${citySearch}&per_page=1&client_id=${clientID}`;
 
       fetch(endpoint)
@@ -164,58 +111,38 @@ function Landing() {
           setImgUrl(data.results[0].urls.thumb);
         });
     }
+
     getImage();
 
-    setSearchData("");
-  };
-
-  const handleChange = (event) => {
-    setSearchData(event.target.value);
+    setSearchData('');
   };
 
   return (
     <main>
-      <h1>Landing</h1>
-      <div>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="city"
-            placeholder="Enter city..."
-            value={searchData}
-            onChange={handleChange}
-          />
-        </form>
-        <img alt="city" src={imgUrl} />
-        <p>search input: {searchData}</p>
-        <p>latitude: {geodata.lat}</p>
-        <p>longitude: {geodata.lon}</p>
-        <p>weather icon code: {weatherData.icon}</p>
-        <p>weather current temp: {weatherData.temp}</p>
-        <p>weather current description: {weatherData.description}</p>
-        <p>weather timezone: {weatherData.timezone}</p>
-        <p>weather timestamp: {weatherData.timestamp}</p>
-        <p>city name: {countryData.cityName}</p>
-        <p>country code: {countryData.countryCode}</p>
-        <p>flag image: {countryData.flagSvgUrl}</p>
-        <p>country language: {countryData.language}</p>
-        <p>country currency: {countryData.currencyCode}</p>
-        <p>country travel advisory score: {countryData.travelAdvisoryScore}</p>
-        {newsData.length > 0 ? (
-          <ul>
-            {newsData.map((article, i) => (
-              <li key={i}>
-                {article.title}{" "}
-                <a href={article.url} target="_blank">
-                  link
-                </a>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No articles</p>
-        )}
-      </div>
+      <form onSubmit={handleSubmit}>
+        <input
+          type='text'
+          name='city'
+          placeholder='Enter city...'
+          value={searchData}
+          onChange={(event) => setSearchData(event.target.value)}
+        />
+      </form>
+      <img alt='city' src={imgUrl} />
+      {/* {newsData.length > 0 ? (
+        <ul>
+          {newsData.map((article, i) => (
+            <li key={i}>
+              {article.title}{' '}
+              <a href={article.url} target='_blank'>
+                link
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No articles</p>
+      )} */}
     </main>
   );
 }
