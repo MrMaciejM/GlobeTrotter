@@ -3,11 +3,15 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import supportedlan from "../supportedLanguages.json";
-import translationIcon from "../icons/translation.gif"
+import translationIcon from "../icons/translation.gif";
+import { setLocalStorage_RecentTranslations } from "../helperFuncs/setLocalStorage"
+import RecentTranslationsTable from "../RecentTranslationsTable";
+
 
 import { Heading, SimpleGrid, Textarea, Box, Container, Button, Text, Card, CardHeader, CardBody, Center } from '@chakra-ui/react';
 
 console.log(supportedlan);
+// setLocalStorage("test-text-?","test-lang-?", "test-?"); //debugging
 
 
 function Translate() {
@@ -20,12 +24,15 @@ function Translate() {
 
   const [isLoadingBtn, setIsLoadingBtn] = useState(false);
 
+  const [tableData, setTableData] = useState(JSON.parse(localStorage.getItem("RecentTranslations")) || []);
 
   const onSubmit = data => {
 
     setIsLoadingBtn(true);
 
     console.log(data);
+
+    const originalText = data.textRequired;
 
     const encodedParams = new URLSearchParams();
     encodedParams.append("q", data.textRequired);
@@ -37,7 +44,7 @@ function Translate() {
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
         'Accept-Encoding': 'application/gzip',
-        'X-RapidAPI-Key': 'ba4297ccadmsh81359987f2544c5p104fa9jsn6bf3224d7a19',
+        'X-RapidAPI-Key': '48a0d43aa1mshab67cd21df07bc0p10c985jsn572f9f125bb3',
         'X-RapidAPI-Host': 'google-translate1.p.rapidapi.com'
       },
       body: encodedParams
@@ -49,12 +56,15 @@ function Translate() {
         console.log(responseData);
 
         const resultObj = supportedlan.text.find(obj => obj.code === responseData.data.translations[0].detectedSourceLanguage);
-        const supportedLanuage = resultObj.language;
+        const supportedLanuage = resultObj.language || "Unable to find language name";
+        const returnedTranslation = responseData.data.translations[0].translatedText;
+        const updatedTableData = setLocalStorage_RecentTranslations(originalText, supportedLanuage, returnedTranslation);
 
         setTimeout(() => {
-          setTranslatedText(responseData.data.translations[0].translatedText);
-          setDetectedLang(supportedLanuage ? supportedLanuage : "Unable to find language name");
+          setTranslatedText(returnedTranslation);
+          setDetectedLang(supportedLanuage);
           setIsLoadingBtn(false);
+          setTableData(updatedTableData);
         }, 5000);
       })
       .catch(err => console.error(err));
@@ -71,7 +81,7 @@ function Translate() {
         <Box m="2">
           <form onSubmit={handleSubmit(onSubmit)}>
             <Box px="2" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-              <Textarea maxW="400px" placeholder="Enter text here to translate" {...register("textRequired", { required: true })} />
+              <Textarea size="md" maxW="400px" placeholder="Enter text here to translate" {...register("textRequired", { required: true })} />
               <Text color="red" visibility={errors.textRequired ? "visible" : "hidden"}>You must provide some text to translate!</Text>
               <Button
                 colorScheme="whiteAlpha"
@@ -96,6 +106,7 @@ function Translate() {
           ) : <CardBody><Text>Enter some text to translate.</Text></CardBody>}
         </Card>
       </SimpleGrid>
+      <Center mx="auto" my="10" maxW="800px"><RecentTranslationsTable tableData={tableData} /></Center>
     </Container>
   );
 }
