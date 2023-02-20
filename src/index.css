@@ -6,8 +6,7 @@
 }
 
 body,
-html,
-#root {
+html {
   height: 100%;
 }
 
@@ -16,10 +15,15 @@ html,
   background-color: lightskyblue;
   display: flex;
   flex-direction: column;
+  min-height: 100%; /* stops any content overflow */
 }
 
 main {
   flex: 1;
+  display: flex; /* center everything */
+  flex-direction: column; /* center everything */
+  justify-content: center; /* center everything */
+  align-items: center; /* center everything */
 }
 
 container {
