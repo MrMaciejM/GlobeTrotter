@@ -10,6 +10,7 @@ import {
     Flex,
 } from "@chakra-ui/react";
 // import { CloseIcon } from "@chakra-ui/icons";
+import { HamburgerIcon } from "@chakra-ui/icons";
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -27,7 +28,9 @@ function Sidebar() {
 
     return (
         <>
-            <Button bg="transparent" size="lg" p={1} leftIcon={<FontAwesomeIcon icon={faBars} />} variant="solid" onClick={onOpen}></Button>
+            <Button bg="transparent" size="lg" p={1} variant="solid" onClick={onOpen} display='flex' alignItems='center'>
+                <FontAwesomeIcon icon={faBars} />
+            </Button>
             <Drawer isFullHeight={true} closeOnOverlayClick={true} closeOnEsc={true} size="md" isOpen={isOpen} placement="left" onClose={onClose}>
                 <DrawerOverlay />
                 <DrawerContent maxW="300px">
