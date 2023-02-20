@@ -77,7 +77,7 @@ function Currency() {
         const updatedTableData = setLocalStorage_RecentConversions(
           `${data.query.amount} (${data.query.from})`,
           `${data.result} (${data.query.to})`,
-          `${data.info.rate} on ${data.date}`
+          `${data.info.rate} (${data.date})`
         );
 
         setTimeout(() => {
