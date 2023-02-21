@@ -1,7 +1,11 @@
 import LocalInfo from '../LocalInfo';
 
 function Landmarks() {
-  return <LocalInfo />;
+  return (
+    <main>
+      <LocalInfo />
+    </main>
+  );
 }
 
 export default Landmarks;

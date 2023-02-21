@@ -8,6 +8,7 @@ import {
   FormLabel,
   Input,
   Spinner,
+  Stack,
   useToast,
 } from '@chakra-ui/react';
 import axios from 'axios';
@@ -33,7 +34,7 @@ function LocalInfo() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log('form submitted');
+    console.log(`form submitted with input: ${formInput}`);
 
     // async function to retrieve city data
     const getCityData = async () => {
@@ -52,6 +53,7 @@ function LocalInfo() {
         );
         console.log('geoResponse', geoResponse.data);
         if (geoResponse.data.length === 0) {
+          setIsLoading(false);
           showFailedSearchToast();
           return;
         }
@@ -89,8 +91,7 @@ function LocalInfo() {
             params: {
               q: geoResponse.data[0].name,
               apiKey: '66a24015f83f414aad84ea0d18eaaccd',
-              sources:
-                'associated-press,cnn,bbc-news,google-news,reuters,reddit-r-all,time',
+              sources: 'associated-press,cnn,bbc-news,reuters,time',
               pageSize: 10,
               language: 'en',
               sortBy: 'relevancy',
@@ -127,17 +128,15 @@ function LocalInfo() {
     };
     setIsLoading(true);
     getCityData();
+    setFormInput('');
   };
 
   return (
     <Container as='section' maxW='100vw' p='10px' size='md'>
-      <Box>
+      {/* <Box>
         <form onSubmit={handleSubmit}>
           <Flex justify='center' align='center' gap='20px'>
             <FormControl isRequired maxW='480px'>
-              {/* <FormLabel requiredIndicator={''}>
-                Get local info for any city in the world
-              </FormLabel> */}
               <Input
                 type='text'
                 name='city'
@@ -145,10 +144,6 @@ function LocalInfo() {
                 value={formInput}
                 onChange={(event) => setFormInput(event.target.value)}
               />
-              {/* <FormHelperText>
-                To make a search more specific, add country code (e.g.
-                Newcastle, AU)
-              </FormHelperText> */}
             </FormControl>
 
             <Button type='submit' variant='ghost' colorScheme='blue'>
@@ -156,15 +151,61 @@ function LocalInfo() {
             </Button>
           </Flex>
         </form>
-      </Box>
-      {isLoading && <Spinner />}
+      </Box> */}
+
+      <Stack>
+        <Box>
+          <form onSubmit={handleSubmit}>
+            <Flex
+              direction='column'
+              justify='center'
+              align='center'
+              gap='20px'
+              mb='20px'
+            >
+              <FormControl isRequired maxW='480px'>
+                {/* <FormLabel requiredIndicator={''}>
+                Get local info for any city in the world
+              </FormLabel> */}
+                <Input
+                  type='text'
+                  name='city'
+                  placeholder='Enter city...'
+                  value={formInput}
+                  onChange={(event) => setFormInput(event.target.value)}
+                />
+                {/* <FormHelperText>
+                To make a search more specific, add country code (e.g.
+                Newcastle, AU)
+              </FormHelperText> */}
+              </FormControl>
+
+              <Button type='submit' colorScheme='twitter'>
+                Search
+              </Button>
+            </Flex>
+          </form>
+        </Box>
+        {isLoading && (
+          <Flex justify='center'>
+            <Spinner />
+          </Flex>
+        )}
+        {storedSearchData && (
+          <Flex justify='center'>
+            <CitySearchResult />
+          </Flex>
+        )}
+      </Stack>
+
+      {/* {isLoading && <Spinner />}
       {storedSearchData && (
         <Box>
           <Flex justify='center'>
             <CitySearchResult />
           </Flex>
         </Box>
-      )}
+      )} */}
     </Container>
   );
 }
