@@ -7,7 +7,7 @@ function Footer() {
       animate={{ opacity: 1 }}
       transition={{ duration: 1, ease: 'easeInOut' }}
     >
-      <p>&copy; 2023 Travel App</p>
+      <p>&copy; 2023 React Wizards</p>
     </motion.footer>
   );
 }
