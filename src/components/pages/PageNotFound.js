@@ -1,35 +1,18 @@
-import { Heading, Text, Center } from '@chakra-ui/layout';
 
-import { onValue } from '@firebase/database';
+import { Heading, Text, Center } from "@chakra-ui/layout";
 
-import ShareASuggestion from '../ShareASuggestion';
+import { onValue } from "@firebase/database";
 
-import { getData } from '../helperFuncs/readData';
+import ShareASuggestion from "../ShareASuggestion";
 
-import lostImage from '../images/lostInTheJungle.jpg';
+import { getData } from "../helperFuncs/readData";
 
-import { useEffect, useState } from 'react';
-import { Card } from '@chakra-ui/card';
+import lostImage from "../images/lostInTheJungle.jpg"
+
+import { useEffect, useState } from "react";
+import { Card } from "@chakra-ui/card";
 
 function PageNotFound() {
-  const [currentMessage, setCurrentMessage] = useState('');
-
-  useEffect(() => {
-    onValue(
-      getData,
-      (snap) => {
-        const dataMessage = snap.val();
-        console.log(dataMessage);
-        setCurrentMessage(dataMessage);
-      },
-      []
-    );
-  });
-
-  const gradient =
-    'radial-gradient(circle, rgba(188, 232, 233, 0.2) 0%, rgba(162, 217, 249, 0.5) 70%)';
-  const bgImage = lostImage;
-  const cardBg = `${gradient}, url(${bgImage})`;
 
   const [currentMessage, setCurrentMessage] = useState("");
 
