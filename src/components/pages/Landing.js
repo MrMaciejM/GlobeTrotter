@@ -8,6 +8,7 @@ import Clock from '../Clock.js';
 
 import LandingCard from '../LandingCard.js';
 import landingcarddata from "../landingCardsData.json"
+import CommunityLandingCard from '../CommunityLandingCard.js';
 
 function Landing() {
   const [storedData, setStoredData] = useState(null);
@@ -190,12 +191,15 @@ function Landing() {
         </Box>
       )}
 
-      <SimpleGrid mx="auto" maxW="1400px" p="2" minChildWidth="320px" spacing="10px">
+      <SimpleGrid mx="auto" maxW="1600px" p="5" minChildWidth="290px" columns={[1, 2, 4]} spacingX="15px" spacingY="20px">
         {landingcarddata.map((data, i) =>
           <Center key={i}>
             <LandingCard title={data.title} description={data.description} image={data.image} moreinfo={data.moreinfo} />
           </Center>
         )}
+
+          <CommunityLandingCard />
+
       </SimpleGrid>
     </main>
   );
