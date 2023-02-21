@@ -1,7 +1,7 @@
 import Sidebar from "./Sidebar";
 
 
-import { Flex, Spacer, Box, Heading } from '@chakra-ui/react';
+import { Flex, Spacer, Box, Heading, Img } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 
 
@@ -37,8 +37,18 @@ function Header() {
         <Box ml={2} position='absolute' left='5px'>
           <Sidebar />
         </Box>
-        <Heading as='h3' fontSize='30px'>
-          GlobeTrotter
+        <Heading as='h1' fontSize='30px'>
+          <Flex>
+
+            Gl
+            <Img
+              src={require(`./icons/globe.gif`)}
+              width="2ch"
+              height="2ch"
+            ></Img>
+            beTrotter
+
+          </Flex>
         </Heading>
       </Flex>
     </motion.div>
