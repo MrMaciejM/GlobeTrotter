@@ -12,13 +12,22 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CitySearchResult from './CitySearchResult';
 
 function LocalInfo() {
   const [storedSearchData, setStoredSearchData] = useState({});
   const [formInput, setFormInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const storedData = JSON.parse(localStorage.getItem('gt_city_search'));
+    if (storedData === null) {
+      return;
+    }
+
+    setStoredSearchData(storedData);
+  }, []);
 
   const failedSearchToast = useToast();
   const showFailedSearchToast = () => {
@@ -34,6 +43,7 @@ function LocalInfo() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setStoredSearchData({});
     console.log(`form submitted with input: ${formInput}`);
 
     // async function to retrieve city data
@@ -115,7 +125,7 @@ function LocalInfo() {
               .charAt(0)
               .toUpperCase() +
             weatherAndTimeZoneResponse.data.weather[0].description.slice(1),
-          imageUrl: imageResponse.data.results[0].urls.full,
+          imageUrl: imageResponse.data.results[0].urls.regular,
           articles: newsResponse.data.articles,
         };
         localStorage.setItem('gt_city_search', JSON.stringify(cityObjToStore));
@@ -191,7 +201,7 @@ function LocalInfo() {
             <Spinner />
           </Flex>
         )}
-        {storedSearchData && (
+        {Object.keys(storedSearchData).length > 0 && (
           <Flex justify='center'>
             <CitySearchResult
               storedSearchData={storedSearchData}

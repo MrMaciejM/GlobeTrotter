@@ -32,7 +32,8 @@ function CitySearchResult({ storedSearchData, setStoredSearchData }) {
           objectPosition='center'
           width={{ base: '100%', md: '260px', lg: '300px' }}
           maxH={{ sm: '150px', md: '220px' }}
-          src='https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60'
+          src={storedSearchData.imageUrl}
+          // src='https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60'
           alt='Caffe Latte'
         />
         <Stack
@@ -40,7 +41,9 @@ function CitySearchResult({ storedSearchData, setStoredSearchData }) {
           minW={{ base: '100%', sm: '400px' }}
           py={{ base: '20px', sm: '15px' }}
         >
-          <Heading size='xl'>London, GB</Heading>
+          <Heading size='xl'>
+            {storedSearchData.cityName + ', ' + storedSearchData.countryCode}
+          </Heading>
           <Flex justify='space-between' align='center'>
             <Box
               borderRadius='lg'
