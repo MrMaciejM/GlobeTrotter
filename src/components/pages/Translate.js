@@ -24,6 +24,30 @@ import { motion } from 'framer-motion';
 console.log(supportedlan);
 // setLocalStorage("test-text-?","test-lang-?", "test-?"); //debugging
 
+const containerVariants = {
+  hidden: {
+    opacity: 0,
+    x: '100vw',
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      type: 'spring',
+      mass: 0.4,
+      damping: 8,
+      // when: 'beforeChildren',
+      // staggerChildren: 0.4,
+    },
+  },
+  exit: {
+    x: '-100vw',
+    transition: {
+      ease: 'easeInOut',
+    },
+  },
+};
+
 function Translate() {
   const {
     register,
@@ -101,97 +125,94 @@ function Translate() {
   console.log(watch('textRequired'));
 
   return (
-    <motion.Container
-      size='md'
-      p='10px'
-      maxW='100vw'
-      as='main'
-      initial={{ opacity: 0, x: '-100vw' }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.3, type: 'spring' }}
-      mr='10px'
-      bg='purple'
+    <motion.main
+      variants={containerVariants}
+      initial='hidden'
+      animate='visible'
+      exit='exit'
     >
-      <Heading as='h2' mb='8' textAlign='center'>
-        LingoLens
-      </Heading>
+      <Container size='md' p='10px' maxW='100vw' as='section'>
+        <Heading as='h2' mb='8' textAlign='center'>
+          LingoLens
+        </Heading>
 
-      <SimpleGrid columns={[1, 2]} spacingX='40px'>
-        <Box m='2'>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Box
-              px='2'
-              display='flex'
-              flexDirection='column'
-              justifyContent='center'
-              alignItems='center'
-            >
-              <Textarea
-                size='md'
-                maxW='400px'
-                placeholder='Enter text here to translate'
-                {...register('textRequired', { required: true })}
-              />
-              <Text
-                whileHover={{ scale: 1 }}
-                color='red'
-                visibility={errors.textRequired ? 'visible' : 'hidden'}
+        <SimpleGrid columns={[1, 2]} spacingX='40px'>
+          <Box m='2'>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Box
+                px='2'
+                display='flex'
+                flexDirection='column'
+                justifyContent='center'
+                alignItems='center'
               >
-                You must provide some text to translate!
-              </Text>
-              <Button
-                colorScheme='whiteAlpha'
-                maxW='350px'
-                isLoading={isLoadingBtn}
-                loadingText='Retrieving data'
-                spinnerPlacement='end'
-                my='5'
-                type='submit'
-                value='Translate'
-                spinner={
-                  <img
-                    style={{ maxHeight: '3ch' }}
-                    src={translationIcon}
-                    alt='loading'
-                  />
-                }
-              >
-                Translate
-              </Button>
-            </Box>
-          </form>
-        </Box>
-        <Card
-          mx='auto'
-          w='100%'
-          h='100%'
-          maxW='500px'
-          bg='whiteAlpha.700'
-          display='flex'
-          flexDirection='column'
-          justifyContent='start'
-          alignItems='center'
-        >
-          {translatedText ? (
-            <>
-              <CardHeader>
-                <Heading size='md'>Detected language: {detectedLang}</Heading>
-              </CardHeader>
+                <Textarea
+                  size='md'
+                  maxW='400px'
+                  placeholder='Enter text here to translate'
+                  {...register('textRequired', { required: true })}
+                />
+                <Text
+                  // whileHover={{ scale: 1 }}
+                  color='red'
+                  visibility={errors.textRequired ? 'visible' : 'hidden'}
+                >
+                  You must provide some text to translate!
+                </Text>
+                <Button
+                  colorScheme='whiteAlpha'
+                  maxW='350px'
+                  isLoading={isLoadingBtn}
+                  loadingText='Retrieving data'
+                  spinnerPlacement='end'
+                  my='5'
+                  type='submit'
+                  value='Translate'
+                  spinner={
+                    <img
+                      style={{ maxHeight: '3ch' }}
+                      src={translationIcon}
+                      alt='loading'
+                    />
+                  }
+                >
+                  Translate
+                </Button>
+              </Box>
+            </form>
+          </Box>
+          <Card
+            mx='auto'
+            w='100%'
+            h='100%'
+            maxW='500px'
+            bg='whiteAlpha.700'
+            display='flex'
+            flexDirection='column'
+            justifyContent='start'
+            alignItems='center'
+          >
+            {translatedText ? (
+              <>
+                <CardHeader>
+                  <Heading size='md'>Detected language: {detectedLang}</Heading>
+                </CardHeader>
+                <CardBody>
+                  <Text>{translatedText}</Text>
+                </CardBody>
+              </>
+            ) : (
               <CardBody>
-                <Text>{translatedText}</Text>
+                <Text>Enter some text to translate.</Text>
               </CardBody>
-            </>
-          ) : (
-            <CardBody>
-              <Text>Enter some text to translate.</Text>
-            </CardBody>
-          )}
-        </Card>
-      </SimpleGrid>
-      <Center mx='auto' my='10' maxW='800px'>
-        <RecentTranslationsTable tableData={tableData} />
-      </Center>
-    </motion.Container>
+            )}
+          </Card>
+        </SimpleGrid>
+        <Center mx='auto' my='10' maxW='800px'>
+          <RecentTranslationsTable tableData={tableData} />
+        </Center>
+      </Container>
+    </motion.main>
   );
 }
 
