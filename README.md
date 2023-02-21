@@ -22,7 +22,7 @@ Globe Trotter was created to be a companion app for travellers. It includes a cu
 
 ## Getting started
 
-Download or clone the repository which can be found [here on GitHub](https://github.com/MrMaciejM/travel-planner) and run the following command to install required dependancies
+Download or clone the repository which can be found [here on GitHub](https://github.com/MrMaciejM/GlobeTrotter) and run the following command to install required dependancies
 
 ```
 npm i
@@ -43,7 +43,7 @@ The translation tool allows users to input words or phrases for translation. The
 
 ### Currency Conversion
 
-![Translation Tool](./public/images/)  <!--- gif to be added once api call is fixed
+![Translation Tool](./public/images/currency.gif)
 
 The currency conversion tool allows users to input a numeric value and the currencies to convert from and too. One submitted the amount, vonverted value and exchange rate are displayed in tabular format.
 
@@ -73,11 +73,9 @@ Please follow the guidelines for contributions:
 - Keep pull requests small and focused on a single change.
 - Include test cases for any new features or changes.
 
-If you have any questions or suggestions, feel free to contact me via [email](mailto:address@email.co).
+If you have any questions or suggestions, feel free to contact us via [email](mailto:address@email.co).
 
 ## Credits
-
-List of credits with links goes here
 
 ## Licence
 
