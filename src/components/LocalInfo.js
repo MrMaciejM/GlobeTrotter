@@ -193,7 +193,10 @@ function LocalInfo() {
         )}
         {storedSearchData && (
           <Flex justify='center'>
-            <CitySearchResult />
+            <CitySearchResult
+              storedSearchData={storedSearchData}
+              setStoredSearchData={setStoredSearchData}
+            />
           </Flex>
         )}
       </Stack>

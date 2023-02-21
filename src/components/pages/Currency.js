@@ -136,7 +136,7 @@ function Currency() {
     >
       <Container p='10px' maxW='100vw' as='section' className='currencyMain'>
         <Heading as='h2' mb='8' textAlign='center'>
-          Currency Convertor
+          Roamer's Rates
         </Heading>
 
         <SimpleGrid minChildWidth='350px'>

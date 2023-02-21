@@ -18,7 +18,12 @@ import {
   Link,
 } from '@chakra-ui/react';
 
-function CitySearchResult() {
+function CitySearchResult({ storedSearchData, setStoredSearchData }) {
+  const handleClear = () => {
+    localStorage.removeItem('gt_city_search');
+    setStoredSearchData({});
+  };
+
   return (
     <Card overflow='hidden' maxW='960px'>
       <Flex flexDirection={{ base: 'column', md: 'row' }} align='center'>
@@ -139,7 +144,12 @@ function CitySearchResult() {
         </CardBody>
 
         <CardFooter display='flex' justifyContent='flex-start' marginTop='0'>
-          <Button size='xs' bg='orange.600' variant='solid' colorScheme='blue'>
+          <Button
+            size='xs'
+            bg='orange.400'
+            variant='solid'
+            onClick={handleClear}
+          >
             Clear Search
           </Button>
         </CardFooter>
