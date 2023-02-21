@@ -77,7 +77,9 @@ function Currency() {
 
     // api call for currency
     var myHeaders = new Headers();
-    myHeaders.append('apikey', 'aaa');
+
+    myHeaders.append("apikey", "hZn9Q1SDwhkak9rt1BHg0Iw018U8OgTl");
+
     // API keys in order of usage:
     // hZn9Q1SDwhkak9rt1BHg0Iw018U8OgTl - <= 20 times used
 
@@ -89,8 +91,10 @@ function Currency() {
 
     fetch(
       `https://api.apilayer.com/fixer/convert?to=${e.toRequired}&from=${e.fromRequired}&amount=${e.amountRequired}`,
-      requestOptions,
-      setFetchMsg('Fetching... please wait')
+
+      requestOptions
+      //setFetchMsg("Fetching... please wait")
+
     )
       .then((response) => response.json())
       .then((data) => {

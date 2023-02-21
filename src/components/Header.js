@@ -1,23 +1,26 @@
-import Sidebar from './Sidebar';
+import Sidebar from "./Sidebar";
+
 
 import { Flex, Spacer, Box, Heading } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 
+
 function Header() {
   const stylesObj = {
     header: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      padding: '2px 5px',
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: "2px 5px",
     },
     Sidebar: {
-      padding: '5px',
+      padding: "5px",
     },
     h1: {},
   };
 
   return (
+
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -35,10 +38,11 @@ function Header() {
           <Sidebar />
         </Box>
         <Heading as='h3' fontSize='30px'>
-          Travel App
+          GlobeTrotter
         </Heading>
       </Flex>
     </motion.div>
+
   );
 }
 
