@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Box, Flex, Input, Button, Link, Heading } from '@chakra-ui/react';
+import { Box, Flex, Input, Button, Link, Heading, SimpleGrid, Center } from '@chakra-ui/react';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 import WeatherIcon from 'react-open-weather-icons';
 
 import Clock from '../Clock.js';
+
+import LandingCard from '../LandingCard.js';
+import landingcarddata from "../landingCardsData.json"
 
 function Landing() {
   const [storedData, setStoredData] = useState(null);
@@ -186,6 +189,14 @@ function Landing() {
           )}
         </Box>
       )}
+
+      <SimpleGrid mx="auto" maxW="1400px" p="2" minChildWidth="320px" spacing="10px">
+        {landingcarddata.map((data, i) =>
+          <Center key={i}>
+            <LandingCard title={data.title} description={data.description} image={data.image} moreinfo={data.moreinfo} />
+          </Center>
+        )}
+      </SimpleGrid>
     </main>
   );
 }
