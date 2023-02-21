@@ -153,7 +153,7 @@ function Translate() {
                   {...register('textRequired', { required: true })}
                 />
                 <Text
-                  whileHover={{ scale: 1 }}
+                  // whileHover={{ scale: 1 }}
                   color='red'
                   visibility={errors.textRequired ? 'visible' : 'hidden'}
                 >
