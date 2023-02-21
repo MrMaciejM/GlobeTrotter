@@ -1,6 +1,9 @@
 import Sidebar from "./Sidebar";
 
-import { Flex, Spacer, Box, Heading } from "@chakra-ui/react";
+
+import { Flex, Spacer, Box, Heading } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
+
 
 function Header() {
   const stylesObj = {
@@ -17,21 +20,29 @@ function Header() {
   };
 
   return (
-    <Flex
-      as="header"
-      alignItems="center"
-      justifyContent="center"
-      p="1"
-      position="relative"
-      m={2}
+
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, ease: 'easeInOut' }}
     >
-      <Box ml={2} position="absolute" left="5px">
-        <Sidebar />
-      </Box>
-      <Heading as="h3" fontSize="30px">
-        GlobeTrotter
-      </Heading>
-    </Flex>
+      <Flex
+        as='header'
+        alignItems='center'
+        justifyContent='center'
+        p='1'
+        position='relative'
+        m={2}
+      >
+        <Box ml={2} position='absolute' left='5px'>
+          <Sidebar />
+        </Box>
+        <Heading as='h3' fontSize='30px'>
+          GlobeTrotter
+        </Heading>
+      </Flex>
+    </motion.div>
+
   );
 }
 
