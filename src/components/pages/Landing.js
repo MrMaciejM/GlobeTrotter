@@ -1,13 +1,44 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Box, Flex, Input, Button, Link, Heading, SimpleGrid, Center } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Input,
+  Button,
+  Link,
+  Heading,
+  SimpleGrid,
+  Center,
+} from '@chakra-ui/react';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 import WeatherIcon from 'react-open-weather-icons';
+import { motion } from 'framer-motion';
 
 import Clock from '../Clock.js';
 
 import LandingCard from '../LandingCard.js';
-import landingcarddata from "../landingCardsData.json"
+import landingcarddata from '../landingCardsData.json';
+
+const containerVariants = {
+  hidden: {
+    opacity: 0,
+    y: '30px',
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: 0.3,
+      duration: 0.2,
+    },
+  },
+  exit: {
+    x: '-100vw',
+    transition: {
+      ease: 'easeInOut',
+    },
+  },
+};
 
 function Landing() {
   const [storedData, setStoredData] = useState(null);
@@ -27,11 +58,12 @@ function Landing() {
           params: {
             q: storedData.cityName,
             apiKey: '66a24015f83f414aad84ea0d18eaaccd',
-            sources: 'bbc-news,cnn',
+            sources:
+              'associated-press,cnn,bbc-news,google-news,reuters,reddit-r-all,time',
             pageSize: 5,
             language: 'en',
             sortBy: 'relevancy',
-            searchIn: 'content',
+            searchIn: 'title,description,content',
           },
         }
       );
@@ -129,7 +161,12 @@ function Landing() {
   };
 
   return (
-    <main>
+    <motion.main
+      variants={containerVariants}
+      initial='hidden'
+      animate='visible'
+      exit='exit'
+    >
       {/* <form onSubmit={handleSubmit}>
         <input
           type='text'
@@ -190,14 +227,25 @@ function Landing() {
         </Box>
       )}
 
-      <SimpleGrid mx="auto" maxW="1400px" p="2" minChildWidth="320px" spacing="10px">
-        {landingcarddata.map((data, i) =>
+      <SimpleGrid
+        mx='auto'
+        maxW='1400px'
+        p='2'
+        minChildWidth='320px'
+        spacing='10px'
+      >
+        {landingcarddata.map((data, i) => (
           <Center key={i}>
-            <LandingCard title={data.title} description={data.description} image={data.image} moreinfo={data.moreinfo} />
+            <LandingCard
+              title={data.title}
+              description={data.description}
+              image={data.image}
+              moreinfo={data.moreinfo}
+            />
           </Center>
-        )}
+        ))}
       </SimpleGrid>
-    </main>
+    </motion.main>
   );
 }
 
