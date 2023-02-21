@@ -26,11 +26,6 @@ main {
   align-items: center; /* center everything */
 }
 
-container {
-  flex: 1;
-  padding: 20px;
-}
-
 .weatherIcon {
   height: 50px;
   width: 50px;

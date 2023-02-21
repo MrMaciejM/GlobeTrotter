@@ -1,9 +1,9 @@
-import ShareASuggestion from "../ShareASuggestion";
+import LocalInfo from '../LocalInfo';
 
 function Landmarks() {
   return (
     <main>
-      <h1>Landmarks</h1>
+      <LocalInfo />
     </main>
   );
 }
