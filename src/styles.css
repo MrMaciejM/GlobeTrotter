@@ -29,10 +29,12 @@
 
 /* SUBMIT/TRANSLATE BUTTONS fOR LingoLens and Roamer's Rates */
 .css-5uwxdw,
-.css-1h078ev {
+.css-1h078ev,
+.css-1x4jxju {
   color: var(--submitButtonsPara) !important;
   background-color: var(--submitButtons) !important;
 }
+
 /* SIDEBAR BUTTON */
 .css-1b15pz3 button {
   color: var(--sidebarButton);
@@ -124,16 +126,20 @@ textarea {
 
 /* Sidebar links text */
 .sidebarBtn {
-color: var(--sidebarButton);
-background-color: var(--cardsBackground);
+  color: var(--sidebarButton);
+  background-color: var(--cardsBackground);
 }
 
 .sidebarBg {
-  background-image: linear-gradient(to top, var(--mainBackground) 0%, var(--bordersColor) 100%);
+  background-image: linear-gradient(
+    to top,
+    var(--mainBackground) 0%,
+    var(--bordersColor) 100%
+  );
 }
 
 .sidebarHeaderBg {
-  background-color: var(--bordersColor);  
+  background-color: var(--bordersColor);
 }
 
 /* END OF APP COLOR STYLES TESTING */
