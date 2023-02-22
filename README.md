@@ -47,6 +47,12 @@ The translation tool allows users to input words or phrases for translation. The
 
 The currency conversion tool allows users to input a numeric value and the currencies to convert from and too. One submitted the amount, vonverted value and exchange rate are displayed in tabular format.
 
+### City Search
+
+![City Search](./public/images/city-search.gif)
+
+The city search tool allows users to input a city name and retrieve information such as the local time, weather and emergency services phone number as well as an image related to the city and a selection of third party links to news articles.
+
 ## Limitations and Future Enhancements
 
 ### Current Limitations
@@ -73,7 +79,7 @@ Please follow the guidelines for contributions:
 - Keep pull requests small and focused on a single change.
 - Include test cases for any new features or changes.
 
-If you have any questions or suggestions, feel free to contact us via [email](mailto:address@email.co).
+If you have any questions or suggestions, feel free to contact us via [email](mailto:example@email.com).
 
 ## Credits
 
