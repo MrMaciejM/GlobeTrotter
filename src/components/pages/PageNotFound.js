@@ -24,7 +24,7 @@ function PageNotFound() {
     }, []);
   });
 
-  const gradient = 'radial-gradient(circle, rgba(188, 232, 233, 0.2) 0%, rgba(162, 217, 249, 0.5) 70%)';
+  const gradient = 'radial-gradient(circle, rgba(188, 232, 233, 0.2) 0%, var(--cardsBackground) 70%)';
   const bgImage = lostImage;
   const cardBg = `${gradient}, url(${bgImage})`;
 
