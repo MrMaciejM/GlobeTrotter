@@ -1,10 +1,10 @@
 import { Container, Heading, SimpleGrid, Box, Center } from "@chakra-ui/layout";
-import { FormControl, FormLabel } from "@chakra-ui/form-control";
+import { FormLabel } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import { Button } from "@chakra-ui/button";
 import { motion } from "framer-motion";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { useForm } from "react-hook-form";
 
@@ -66,9 +66,15 @@ function Currency() {
 
   const [isLoadingBtn, setIsLoadingBtn] = useState(false);
 
-  const [tableData, setTableData] = useState(
-    JSON.parse(localStorage.getItem("RecentConversions")) || []
-  );
+  useEffect( () => {
+    setIsLoadingBtn(false)
+  }, []);
+
+  const [tableData, setTableData] = useState([]);
+
+  useEffect( () => {
+    setTableData(JSON.parse(localStorage.getItem("RecentConversions")) || []);
+  }, []);
 
   // form
   const formSubmitHandler = (e) => {
@@ -81,7 +87,7 @@ function Currency() {
     // api call for currency
     var myHeaders = new Headers();
 
-    myHeaders.append("apikey", "hZn9Q1SDwhkak9rt1BHg0Iw018U8OgTl");
+    myHeaders.append("apikey", "zc3JTW1T9N9AYev9FEyKGDLryG7QPonb");
 
     // API keys in order of usage:
     // hZn9Q1SDwhkak9rt1BHg0Iw018U8OgTl - <= 20 times used
@@ -100,18 +106,25 @@ function Currency() {
     )
       .then((response) => response.json())
       .then((data) => {
-        let resultRate = data.info.rate;
-        let resultExchangedRate = data.result;
+
+        console.log(data);
+        let resultRate = data.info.rate; // dont know why they are let but dont want to waste api calls testing
+        let resultExchangedRate = data.result; // dont know why they are let but dont want to waste api calls testing
+        let amount = data.query.amount; // dont know why they are let but dont want to waste api calls testing
+
+        const resultRateRounded = parseFloat(resultRate).toFixed(2);
+        const resultExchangedRateRounded = parseFloat(resultExchangedRate).toFixed(2);
+        const amountRounded = parseFloat(amount).toFixed(2);
 
         const updatedTableData = setLocalStorage_RecentConversions(
-          `${data.query.amount} (${data.query.from})`,
-          `${data.result} (${data.query.to})`,
-          `${data.info.rate} (${data.date})`
+          `${amountRounded} (${data.query.from})`,
+          `${resultExchangedRateRounded} (${data.query.to})`,
+          `${resultRateRounded} (${data.date})`
         );
 
         setTimeout(() => {
-          setCurrencyRate(resultRate);
-          setExchangedRate(resultExchangedRate);
+          setCurrencyRate(resultRateRounded);
+          setExchangedRate(resultExchangedRateRounded);
           setFetchMsg("Request completed");
           setErrorMsg("");
           setTableData(updatedTableData);

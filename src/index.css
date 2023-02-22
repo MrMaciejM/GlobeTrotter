@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
 /* resets */
 * {
   margin: 0;
@@ -27,8 +29,27 @@ main {
 }
 
 .weatherIcon {
-  height: 50px;
-  width: 50px;
+  height: 60px;
+  width: 60px;
+}
+
+.timeElement {
+  font-family: 'Roboto', sans-serif;
+  margin-top: 0 !important;
+}
+
+.tempElement {
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+}
+
+.emergencyNumber {
+  font-family: 'Roboto', sans-serif;
+  text-decoration: none !important;
+  transition: transform 0.3s ease-in-out;
+}
+.emergencyNumber:hover {
+  transform: scale(1.1);
 }
 
 footer {

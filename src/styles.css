@@ -122,4 +122,18 @@ textarea {
   color: var(--roamersCardText) !important;
 }
 
+/* Sidebar links text */
+.sidebarBtn {
+color: var(--sidebarButton);
+background-color: var(--cardsBackground);
+}
+
+.sidebarBg {
+  background-image: linear-gradient(to top, var(--mainBackground) 0%, var(--bordersColor) 100%);
+}
+
+.sidebarHeaderBg {
+  background-color: var(--bordersColor);  
+}
+
 /* END OF APP COLOR STYLES TESTING */

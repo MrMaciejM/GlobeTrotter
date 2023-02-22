@@ -3,7 +3,7 @@ import currencyCardBg from "./images/currencyCardBg.jpg"
 
 function CurrencyConversionCard({ fromCurrency, toCurrency, amount, result, exRate }) {
 
-    const gradient = 'radial-gradient(circle, rgba(188, 232, 233, 0.2) 0%, rgba(162, 217, 249, 0.7) 70%)';
+    const gradient = 'radial-gradient(circle, rgba(130, 130, 130, 0.2) 0%, rgba(150, 150, 150, 0.7) 70%)';
     const bgImage = currencyCardBg;
     const cardBg = `${gradient}, url(${bgImage})`;
 
