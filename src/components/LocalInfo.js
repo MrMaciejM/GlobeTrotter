@@ -4,12 +4,12 @@ import {
   Container,
   Flex,
   FormControl,
-  FormHelperText,
-  FormLabel,
+  Heading,
   Input,
   Spinner,
   Stack,
   useToast,
+  Text,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -174,6 +174,20 @@ function LocalInfo() {
     <Container as='section' maxW='100vw' p='10px' size='md'>
       <Stack>
         <Box>
+          <Flex
+            maxW='600px'
+            justify='center'
+            direction='column'
+            margin='10px auto'
+          >
+            <Heading align='center' mb='10px'>
+              City Search
+            </Heading>
+            <Text align='center'>
+              Search any city you want to quickly find the local time, weather,
+              emergency number and related news.
+            </Text>
+          </Flex>
           <form onSubmit={handleSubmit}>
             <Flex
               direction='column'

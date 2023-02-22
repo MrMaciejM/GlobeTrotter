@@ -1,16 +1,17 @@
-import { SimpleGrid, Center } from "@chakra-ui/react";
-import { motion } from "framer-motion";
+import { SimpleGrid, Center } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
 
-import LandingCard from "../LandingCard.js";
-import landingcarddata from "../landingCardsData.json";
-import CommunityLandingCard from "../CommunityLandingCard.js";
-import "../../styles.css";
-import HeroBanner from "../HeroBanner.js";
+import LandingCard from '../LandingCard.js';
+import landingcarddata from '../landingCardsData.json';
+import CommunityLandingCard from '../CommunityLandingCard.js';
+import '../../styles.css';
+import HeroBanner from '../HeroBanner.js';
+import LocalInfo from '../LocalInfo.js';
 
 const containerVariants = {
   hidden: {
     opacity: 0,
-    y: "30px",
+    y: '30px',
   },
   visible: {
     opacity: 1,
@@ -21,9 +22,9 @@ const containerVariants = {
     },
   },
   exit: {
-    x: "-100vw",
+    x: '-100vw',
     transition: {
-      ease: "easeInOut",
+      ease: 'easeInOut',
     },
   },
 };
@@ -32,23 +33,22 @@ function Landing() {
   return (
     <motion.main
       variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      exit="exit"
+      initial='hidden'
+      animate='visible'
+      exit='exit'
     >
-
-    <Center>
-      <HeroBanner />
-    </Center>
+      <Center>
+        <HeroBanner />
+      </Center>
 
       <SimpleGrid
-        mx="auto"
-        maxW="1600px"
-        p="5"
-        minChildWidth="290px"
+        mx='auto'
+        maxW='1600px'
+        p='5'
+        minChildWidth='290px'
         columns={[1, 2, 4]}
-        spacingX="15px"
-        spacingY="20px"
+        spacingX='15px'
+        spacingY='20px'
       >
         {landingcarddata.map((data, i) => (
           <Center key={i}>
@@ -62,7 +62,7 @@ function Landing() {
         ))}
         <CommunityLandingCard />
       </SimpleGrid>
-
+      <LocalInfo />
     </motion.main>
   );
 }
