@@ -16,6 +16,7 @@ import {
   Link,
   Tooltip,
   Hide,
+  useToast,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import WeatherIcon from 'react-open-weather-icons';
@@ -49,9 +50,22 @@ function CitySearchResult({ storedSearchData, setStoredSearchData }) {
     setNumArticlesToShow(3);
   };
 
+  const clearSearchToast = useToast();
+  const showClearSearchToast = () => {
+    clearSearchToast({
+      title: 'Search cleared from history',
+      description: 'Why not make a new search?',
+      duration: 3000,
+      isClosable: true,
+      status: 'success',
+      position: 'top',
+    });
+  };
+
   const handleClear = () => {
     localStorage.removeItem('gt_city_search');
     setStoredSearchData({});
+    showClearSearchToast();
   };
 
   return (

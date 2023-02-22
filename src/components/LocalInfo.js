@@ -34,8 +34,8 @@ function LocalInfo() {
   const failedSearchToast = useToast();
   const showFailedSearchToast = () => {
     failedSearchToast({
-      title: 'No Results Found',
-      description: "Your input didn't match any city in our database",
+      title: 'No matches found',
+      description: 'Please check spelling and try again',
       duration: 3000,
       isClosable: true,
       status: 'warning',
