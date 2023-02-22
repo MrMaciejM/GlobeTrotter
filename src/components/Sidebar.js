@@ -29,30 +29,38 @@ function Sidebar() {
     return (
         <>
             <Button
-            title="navigation button"
-            bg="transparent"
-            size="lg"
-            p={1}
-            variant="solid"
-            onClick={onOpen}
-            display='flex'
-            alignItems='center'
+                title="Navigation"
+                size="lg"
+                border="none"
+                p={1}
+                variant="ghost"
+                onClick={onOpen}
+                display='flex'
+                alignItems='center'
             >
                 <FontAwesomeIcon icon={faBars} />
             </Button>
             <Drawer isFullHeight={true} closeOnOverlayClick={true} closeOnEsc={true} size="md" isOpen={isOpen} placement="left" onClose={onClose}>
                 <DrawerOverlay />
                 <DrawerContent maxW="300px">
-                    <Flex justifyContent="center" alignItems="center">
-                    <DrawerCloseButton size="lg" />
-                    <DrawerHeader fontSize="2xl" fontWeight="bold" color="teal">Navigation</DrawerHeader>
+                    <Flex  className="sidebarHeaderBg" justifyContent="center" alignItems="center">
+                        <DrawerCloseButton size="lg" />
+                        <DrawerHeader fontSize="3xl" fontWeight="bold" color="var(--mainBackground)">Navigation</DrawerHeader>
                     </Flex>
-                    <DrawerBody pb="4">
-                        <Flex mt={10} gap={10} flexDirection="column">
-                            <Link to="/" onClick={onClose}>Home</Link>
-                            <Link to="/translate" onClick={onClose}>Translate</Link>
-                            <Link to="/currency" onClick={onClose}>Currency</Link>
-                            <Link to="/landmarks" onClick={onClose}>Landmarks</Link>
+                    <DrawerBody  className="sidebarBg" pb="4">
+                        <Flex  mt={10} gap={10} flexDirection="column">
+                            <Link to="/" onClick={onClose}>
+                                <Button variant="ghost" className="sidebarBtn" minW="100%">Home</Button>
+                            </Link>
+                            <Link to="/translate" onClick={onClose}>
+                                <Button variant="ghost" className="sidebarBtn" minW="100%">Translate</Button>
+                            </Link>
+                            <Link to="/currency" onClick={onClose}>
+                                <Button variant="ghost" className="sidebarBtn" minW="100%">Currency</Button>
+                            </Link>
+                            <Link to="/landmarks" onClick={onClose}>
+                                <Button variant="ghost" className="sidebarBtn" minW="100%">Landmarks</Button>
+                            </Link>
                         </Flex>
                     </DrawerBody>
                 </DrawerContent>
