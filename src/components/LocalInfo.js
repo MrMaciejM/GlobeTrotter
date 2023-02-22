@@ -122,23 +122,28 @@ function LocalInfo() {
         const imageResponse = await axios.get(endpoint);
         console.log('getImageResponse', imageResponse.data);
 
-        // get news data
-        const newsResponse = await axios.get(
-          'https://newsapi.org/v2/everything',
-          {
-            params: {
-              q: geoResponse.data[0].name,
-              apiKey: '66a24015f83f414aad84ea0d18eaaccd',
-              sources: 'associated-press,cnn,bbc-news,reuters,time',
-              pageSize: 10,
-              language: 'en',
-              sortBy: 'relevancy',
-              searchIn: 'title,description,content',
-            },
-          }
-        );
-        console.log('newsResponse', newsResponse.data);
+        const params = {
+          q: geoResponse.data[0].name,
+          apiKey: '66a24015f83f414aad84ea0d18eaaccd',
+          sources: 'associated-press,cnn,bbc-news,reuters,time',
+          pageSize: 10,
+          language: 'en',
+          sortBy: 'relevancy',
+          searchIn: 'title,description,content',
+        };
 
+        const apiUrl = `https://newsapi.org/v2/everything?q=${params.q}&apiKey=${params.apiKey}&sources=${params.sources}&pageSize=${params.pageSize}&language=en&sortBy=relevancy&searchIn=${params.searchIn}`;
+
+        const urlString = `https://api.allorigins.win/get?url=${encodeURIComponent(
+          apiUrl
+        )}`;
+
+        // get news data
+        const response = await axios.get(urlString);
+        // console.log('newsResponse', response.data);
+
+        const newsResponse = JSON.parse(response.data.contents);
+        console.log('newsResponse', newsResponse);
         // store data
         cityObjToStore = {
           cityName: geoResponse.data[0].name,
@@ -154,7 +159,7 @@ function LocalInfo() {
               .toUpperCase() +
             weatherAndTimeZoneResponse.data.weather[0].description.slice(1),
           imageUrl: imageResponse.data.results[0].urls.regular,
-          articles: newsResponse.data.articles,
+          articles: newsResponse.articles,
           emergencyNumber: getEmergencyNumber(geoResponse.data[0].country),
         };
         localStorage.setItem('gt_city_search', JSON.stringify(cityObjToStore));
