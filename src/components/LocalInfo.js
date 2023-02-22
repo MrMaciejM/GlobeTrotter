@@ -13,7 +13,9 @@ import {
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+
 import CitySearchResult from './CitySearchResult';
+import emergencyNumbersData from '../data/List-Of-Emergency-Telephone-Numbers.json';
 
 function LocalInfo() {
   const [storedSearchData, setStoredSearchData] = useState({});
@@ -39,6 +41,32 @@ function LocalInfo() {
       status: 'warning',
       position: 'top',
     });
+  };
+
+  const getEmergencyNumber = (countryCode) => {
+    const countryObject = emergencyNumbersData.find(
+      (obj) => obj.Country.ISOCode === countryCode
+    );
+    if (!countryObject) {
+      return '123'; // default
+    }
+    // dispatch try
+    if (countryObject.Dispatch && countryObject.Dispatch.All[0] !== null) {
+      return countryObject.Dispatch.All[0];
+    }
+    // police try
+    if (countryObject.Police && countryObject.Police.All[0] !== null) {
+      return countryObject.Police.All[0];
+    }
+    // ambulance try
+    if (countryObject.Ambulance && countryObject.Ambulance.All[0] !== null) {
+      return countryObject.Ambulance.All[0];
+    }
+    // fire try
+    if (countryObject.Fire && countryObject.Fire.All[0] !== null) {
+      return countryObject.Fire.All[0];
+    }
+    return '123'; // if all else fails...
   };
 
   const handleSubmit = (event) => {
@@ -127,6 +155,7 @@ function LocalInfo() {
             weatherAndTimeZoneResponse.data.weather[0].description.slice(1),
           imageUrl: imageResponse.data.results[0].urls.regular,
           articles: newsResponse.data.articles,
+          emergencyNumber: getEmergencyNumber(geoResponse.data[0].country),
         };
         localStorage.setItem('gt_city_search', JSON.stringify(cityObjToStore));
         setStoredSearchData(cityObjToStore);
@@ -143,26 +172,6 @@ function LocalInfo() {
 
   return (
     <Container as='section' maxW='100vw' p='10px' size='md'>
-      {/* <Box>
-        <form onSubmit={handleSubmit}>
-          <Flex justify='center' align='center' gap='20px'>
-            <FormControl isRequired maxW='480px'>
-              <Input
-                type='text'
-                name='city'
-                placeholder='Enter city...'
-                value={formInput}
-                onChange={(event) => setFormInput(event.target.value)}
-              />
-            </FormControl>
-
-            <Button type='submit' variant='ghost' colorScheme='blue'>
-              Search
-            </Button>
-          </Flex>
-        </form>
-      </Box> */}
-
       <Stack>
         <Box>
           <form onSubmit={handleSubmit}>
@@ -185,9 +194,9 @@ function LocalInfo() {
                   onChange={(event) => setFormInput(event.target.value)}
                 />
                 {/* <FormHelperText>
-                To make a search more specific, add country code (e.g.
-                Newcastle, AU)
-              </FormHelperText> */}
+                  Add country code for greater specificity (e.g. 'Newcastle,
+                  AU')
+                </FormHelperText> */}
               </FormControl>
 
               <Button type='submit' colorScheme='twitter'>
@@ -210,15 +219,6 @@ function LocalInfo() {
           </Flex>
         )}
       </Stack>
-
-      {/* {isLoading && <Spinner />}
-      {storedSearchData && (
-        <Box>
-          <Flex justify='center'>
-            <CitySearchResult />
-          </Flex>
-        </Box>
-      )} */}
     </Container>
   );
 }
