@@ -41,6 +41,8 @@ function Landing() {
         <HeroBanner />
       </Center>
 
+      <LocalInfo />
+
       <SimpleGrid
         mx='auto'
         maxW='1600px'
@@ -62,7 +64,7 @@ function Landing() {
         ))}
         <CommunityLandingCard />
       </SimpleGrid>
-      <LocalInfo />
+
     </motion.main>
   );
 }
