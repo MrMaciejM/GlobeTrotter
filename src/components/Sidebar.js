@@ -58,9 +58,6 @@ function Sidebar() {
                             <Link to="/currency" onClick={onClose}>
                                 <Button variant="ghost" className="sidebarBtn" minW="100%">Currency</Button>
                             </Link>
-                            <Link to="/landmarks" onClick={onClose}>
-                                <Button variant="ghost" className="sidebarBtn" minW="100%">Landmarks</Button>
-                            </Link>
                         </Flex>
                     </DrawerBody>
                 </DrawerContent>
