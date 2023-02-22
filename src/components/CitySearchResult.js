@@ -168,9 +168,9 @@ function CitySearchResult({ storedSearchData, setStoredSearchData }) {
                     <HStack>
                       <Hide below='md'>
                         <Avatar
-                          name={newsSourceMappings[article.source.Id]}
+                          name={newsSourceMappings[article.source.id]}
                           bg='gray.100'
-                          src={`images/${article.source.Id}.svg`}
+                          src={`images/${article.source.id}.svg`}
                           size='xs'
                         />
                       </Hide>
@@ -192,7 +192,7 @@ function CitySearchResult({ storedSearchData, setStoredSearchData }) {
                         }}
                         width='80px'
                       >
-                        {newsSourceMappings[article.source.Id]}
+                        {newsSourceMappings[article.source.id]}
                         <ExternalLinkIcon mx='2px' />
                       </Link>
                     </HStack>
