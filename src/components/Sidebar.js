@@ -28,7 +28,16 @@ function Sidebar() {
 
     return (
         <>
-            <Button bg="transparent" size="lg" p={1} variant="solid" onClick={onOpen} display='flex' alignItems='center'>
+            <Button
+            title="navigation button"
+            bg="transparent"
+            size="lg"
+            p={1}
+            variant="solid"
+            onClick={onOpen}
+            display='flex'
+            alignItems='center'
+            >
                 <FontAwesomeIcon icon={faBars} />
             </Button>
             <Drawer isFullHeight={true} closeOnOverlayClick={true} closeOnEsc={true} size="md" isOpen={isOpen} placement="left" onClose={onClose}>

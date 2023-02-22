@@ -1,6 +1,6 @@
 import Sidebar from "./Sidebar";
 
-import { Flex, Spacer, Box, Heading, Img } from "@chakra-ui/react";
+import { Flex, Spacer, Heading, Img } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 
 function Header() {
@@ -26,15 +26,15 @@ function Header() {
       <Flex
         as="header"
         alignItems="center"
-        justifyContent="center"
-        p="1"
-        position="relative"
-        m={2}
+        justifyContent="space=between"
+        p="3"
       >
-        <Box ml={2} position="absolute" left="5px">
-          <Sidebar />
-        </Box>
-        <Heading as="h1" fontSize="30px">
+
+        <Sidebar />
+
+        <Spacer></Spacer>
+
+        <Heading as="h1" fontFamily="Poppins" textAlign="center">
           <Flex>
             Gl
             <Img
@@ -42,10 +42,14 @@ function Header() {
               src={require(`./icons/globe.gif`)}
               width="2ch"
               height="2ch"
+              alt="gif of a globe spin which replaces the first o in Globetrotter in the header"
             ></Img>
             beTrotter
           </Flex>
         </Heading>
+
+        <Spacer></Spacer>
+
       </Flex>
     </motion.div>
   );

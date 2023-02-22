@@ -5,6 +5,7 @@ import LandingCard from "../LandingCard.js";
 import landingcarddata from "../landingCardsData.json";
 import CommunityLandingCard from "../CommunityLandingCard.js";
 import "../../styles.css";
+import HeroBanner from "../HeroBanner.js";
 
 const containerVariants = {
   hidden: {
@@ -35,6 +36,11 @@ function Landing() {
       animate="visible"
       exit="exit"
     >
+
+    <Center>
+      <HeroBanner />
+    </Center>
+
       <SimpleGrid
         mx="auto"
         maxW="1600px"
@@ -56,6 +62,7 @@ function Landing() {
         ))}
         <CommunityLandingCard />
       </SimpleGrid>
+
     </motion.main>
   );
 }
