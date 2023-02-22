@@ -38,6 +38,9 @@ const containerVariants = {
 
 // API key for APILayer currency:
 // hZn9Q1SDwhkak9rt1BHg0Iw018U8OgTl
+//
+// new API Key 22/02/2023
+// 8sXMFxCnTN8ltCI7z2CltLT4ConyOUxW
 // to make a call
 // fetch("https://api.apilayer.com/fixer/convert?to=to&from=from&amount=amount", requestOptions)
 
