@@ -32,7 +32,7 @@ function ShareASuggestion() {
 
     return (
         <Center m={2}>
-            <Card bgColor="blue.200" size={["sm", "md", "lg"]} p="1">
+            <Card bgColor="whiteAlpha.700" size={["sm", "md", "lg"]} p="1">
                 <CardHeader>
                     <Heading textAlign="center" size={["sm", "md"]}>Suggest an Adventure to the next visitor!</Heading>
                 </CardHeader>
@@ -52,7 +52,8 @@ function ShareASuggestion() {
                                 />
                             </FormLabel>
                             <Button
-                                colorScheme="whiteAlpha"
+                            className="cardsButtons"
+                                // colorScheme="whiteAlpha"
                                 minW="200px"
                                 maxW="350px"
                                 isLoading={isLoadingBtn}
