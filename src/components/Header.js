@@ -34,7 +34,7 @@ function Header() {
         <Box ml={2} position="absolute" left="5px">
           <Sidebar />
         </Box>
-        <Heading as="h1" fontSize="30px">
+        <Heading as="h1" fontFamily="Poppins">
           <Flex>
             Gl
             <Img
@@ -42,6 +42,7 @@ function Header() {
               src={require(`./icons/globe.gif`)}
               width="2ch"
               height="2ch"
+              alt="gif of a globe spin which replaces the first o in Globetrotter in the header"
             ></Img>
             beTrotter
           </Flex>
