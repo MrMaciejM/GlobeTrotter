@@ -1,37 +1,37 @@
-import { Container, Heading, SimpleGrid, Box, Center } from '@chakra-ui/layout';
-import { FormControl, FormLabel } from '@chakra-ui/form-control';
-import { Input } from '@chakra-ui/input';
-import { Button } from '@chakra-ui/button';
-import { motion } from 'framer-motion';
+import { Container, Heading, SimpleGrid, Box, Center } from "@chakra-ui/layout";
+import { FormControl, FormLabel } from "@chakra-ui/form-control";
+import { Input } from "@chakra-ui/input";
+import { Button } from "@chakra-ui/button";
+import { motion } from "framer-motion";
 
-import { useState } from 'react';
+import { useState } from "react";
 
-import { useForm } from 'react-hook-form';
+import { useForm } from "react-hook-form";
 
-import exchangeIcon from '../icons/exchange.gif';
-import CurrencyConversionCard from '../CurrencyConvertCard';
+import exchangeIcon from "../icons/exchange.gif";
+import CurrencyConversionCard from "../CurrencyConvertCard";
 
-import RecentConversionsTable from '../RecentConversionsTable';
-import { setLocalStorage_RecentConversions } from '../helperFuncs/setLocalStorage_RecentConversions';
+import RecentConversionsTable from "../RecentConversionsTable";
+import { setLocalStorage_RecentConversions } from "../helperFuncs/setLocalStorage_RecentConversions";
 
 const containerVariants = {
   hidden: {
     opacity: 0,
-    x: '100vw',
+    x: "100vw",
   },
   visible: {
     opacity: 1,
     x: 0,
     transition: {
-      type: 'spring',
+      type: "spring",
       mass: 0.4,
       damping: 8,
     },
   },
   exit: {
-    x: '-100vw',
+    x: "-100vw",
     transition: {
-      ease: 'easeInOut',
+      ease: "easeInOut",
     },
   },
 };
@@ -46,13 +46,13 @@ const containerVariants = {
 // and update the API key.
 
 function Currency() {
-  const [amount, setAmount] = useState('');
-  const [countryFrom, setCountryFrom] = useState('');
-  const [countryTo, setCountryTo] = useState('');
-  const [currencyRate, setCurrencyRate] = useState('');
-  const [exchangedRate, setExchangedRate] = useState('');
-  const [errorMsg, setErrorMsg] = useState('');
-  const [fetchMsg, setFetchMsg] = useState('');
+  const [amount, setAmount] = useState("");
+  const [countryFrom, setCountryFrom] = useState("");
+  const [countryTo, setCountryTo] = useState("");
+  const [currencyRate, setCurrencyRate] = useState("");
+  const [exchangedRate, setExchangedRate] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [fetchMsg, setFetchMsg] = useState("");
 
   const {
     register,
@@ -64,7 +64,7 @@ function Currency() {
   const [isLoadingBtn, setIsLoadingBtn] = useState(false);
 
   const [tableData, setTableData] = useState(
-    JSON.parse(localStorage.getItem('RecentConversions')) || []
+    JSON.parse(localStorage.getItem("RecentConversions")) || []
   );
 
   // form
@@ -84,8 +84,8 @@ function Currency() {
     // hZn9Q1SDwhkak9rt1BHg0Iw018U8OgTl - <= 20 times used
 
     var requestOptions = {
-      method: 'GET',
-      redirect: 'follow',
+      method: "GET",
+      redirect: "follow",
       headers: myHeaders,
     };
 
@@ -94,7 +94,6 @@ function Currency() {
 
       requestOptions
       //setFetchMsg("Fetching... please wait")
-
     )
       .then((response) => response.json())
       .then((data) => {
@@ -110,8 +109,8 @@ function Currency() {
         setTimeout(() => {
           setCurrencyRate(resultRate);
           setExchangedRate(resultExchangedRate);
-          setFetchMsg('Request completed');
-          setErrorMsg('');
+          setFetchMsg("Request completed");
+          setErrorMsg("");
           setTableData(updatedTableData);
           setIsLoadingBtn(false);
         }, 5000);
@@ -120,9 +119,9 @@ function Currency() {
         // error msg
         setTimeout(() => {
           console.log(error);
-          setFetchMsg('');
+          setFetchMsg("");
           setIsLoadingBtn(false);
-          setErrorMsg('Error: failed to fetch, please try again in a moment.');
+          setErrorMsg("Error: failed to fetch, please try again in a moment.");
         }, 5000);
       });
 
@@ -134,89 +133,89 @@ function Currency() {
   return (
     <motion.main
       variants={containerVariants}
-      initial='hidden'
-      animate='visible'
-      exit='exit'
+      initial="hidden"
+      animate="visible"
+      exit="exit"
     >
-      <Container p='10px' maxW='100vw' as='section' className='currencyMain'>
-        <Heading as='h2' mb='8' textAlign='center'>
+      <Container p="10px" maxW="100vw" as="section" className="currencyMain">
+        <Heading as="h2" mb="8" textAlign="center">
           Roamer's Rates
         </Heading>
 
-        <SimpleGrid minChildWidth='350px'>
-          <Box m='2' display='flex' justifyContent='center' alignItems='center'>
-            <form as='form' onSubmit={handleSubmit(formSubmitHandler)}>
+        <SimpleGrid minChildWidth="350px">
+          <Box m="2" display="flex" justifyContent="center" alignItems="center">
+            <form as="form" onSubmit={handleSubmit(formSubmitHandler)}>
               <Box
-                px='2'
-                display='flex'
-                flexDirection='column'
-                justifyContent='center'
-                alignItems='center'
-                gap='2'
+                px="2"
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
+                gap="2"
               >
-                <FormLabel minW='300px'>
+                <FormLabel minW="300px">
                   Amount
                   <Input
-                    id='amount'
+                    id="amount"
                     isRequired={true}
-                    {...register('amountRequired', { required: true })}
+                    {...register("amountRequired", { required: true })}
                     onChange={(e) => {
                       setAmount(e.target.value);
                     }}
-                    type='number'
-                    placeholder='0'
+                    type="number"
+                    placeholder="0"
                   />
                 </FormLabel>
 
-                <FormLabel minW='300px'>
+                <FormLabel minW="300px">
                   From
                   <Input
-                    id='from'
+                    id="from"
                     isRequired={true}
-                    {...register('fromRequired', { required: true })}
+                    {...register("fromRequired", { required: true })}
                     onChange={(e) => {
                       setCountryFrom(e.target.value.toUpperCase());
                     }}
-                    type='text'
-                    placeholder='EUR'
+                    type="text"
+                    placeholder="EUR"
                   />
                 </FormLabel>
 
-                <FormLabel minW='300px'>
+                <FormLabel minW="300px">
                   To
                   <Input
-                    id='to'
+                    id="to"
                     isRequired={true}
-                    {...register('toRequired', { required: true })}
+                    {...register("toRequired", { required: true })}
                     onChange={(e) => {
                       setCountryTo(e.target.value.toUpperCase());
                     }}
-                    type='text'
-                    placeholder='GBP'
+                    type="text"
+                    placeholder="GBP"
                   />
                 </FormLabel>
 
                 <Button
-                  colorScheme='whiteAlpha'
-                  maxW='350px'
+                  colorScheme="whiteAlpha"
+                  maxW="350px"
                   isLoading={isLoadingBtn}
-                  loadingText='Fetching Data...'
-                  spinnerPlacement='end'
-                  my='5'
-                  type='submit'
-                  value='Convert'
+                  loadingText="Fetching Data..."
+                  spinnerPlacement="end"
+                  my="5"
+                  type="submit"
+                  value="Convert"
                   spinner={
                     <img
-                      style={{ maxHeight: '3ch' }}
+                      style={{ maxHeight: "3ch" }}
                       src={exchangeIcon}
-                      alt='loading'
+                      alt="loading"
                     />
                   }
                 >
                   Submit
                 </Button>
                 <p
-                  className='fetchMsg'
+                  className="fetchMsg"
                   onChange={() => {
                     setFetchMsg(fetchMsg);
                   }}
@@ -224,7 +223,7 @@ function Currency() {
                   {fetchMsg}
                 </p>
                 <p
-                  className='errorMsg'
+                  className="errorMsg"
                   onChange={() => {
                     setErrorMsg(errorMsg);
                   }}
@@ -238,15 +237,15 @@ function Currency() {
           {/* currency dashboard */}
           <Center>
             <CurrencyConversionCard
-              fromCurrency={countryFrom || 'USD'}
-              toCurrency={countryTo || 'GBP'}
+              fromCurrency={countryFrom || "USD"}
+              toCurrency={countryTo || "GBP"}
               amount={amount || 0}
               result={exchangedRate || 0}
               exRate={currencyRate || 0}
             />
           </Center>
         </SimpleGrid>
-        <Center mx='auto' my='10' maxW='800px'>
+        <Center mx="auto" my="10" maxW="800px">
           <RecentConversionsTable tableData={tableData} />
         </Center>
       </Container>

@@ -1,9 +1,7 @@
 import Sidebar from "./Sidebar";
 
-
-import { Flex, Spacer, Box, Heading, Img } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
-
+import { Flex, Spacer, Heading, Img } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 
 function Header() {
   const stylesObj = {
@@ -20,39 +18,40 @@ function Header() {
   };
 
   return (
-
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.5, ease: 'easeInOut' }}
+      transition={{ duration: 0.5, ease: "easeInOut" }}
     >
       <Flex
-        as='header'
-        alignItems='center'
-        justifyContent='center'
-        p='1'
-        position='relative'
-        m={2}
+        as="header"
+        alignItems="center"
+        justifyContent="space=between"
+        p="3"
       >
-        <Box ml={2} position='absolute' left='5px'>
-          <Sidebar />
-        </Box>
-        <Heading as='h1' fontSize='30px'>
-          <Flex>
 
+        <Sidebar />
+
+        <Spacer></Spacer>
+
+        <Heading as="h1" fontFamily="Poppins" textAlign="center">
+          <Flex>
             Gl
             <Img
+              className="globeImg"
               src={require(`./icons/globe.gif`)}
               width="2ch"
               height="2ch"
+              alt="gif of a globe spin which replaces the first o in Globetrotter in the header"
             ></Img>
             beTrotter
-
           </Flex>
         </Heading>
+
+        <Spacer></Spacer>
+
       </Flex>
     </motion.div>
-
   );
 }
 

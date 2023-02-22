@@ -1,4 +1,5 @@
-import LocalInfo from '../LocalInfo';
+import LocalInfo from "../LocalInfo";
+import "../../styles.css";
 
 function Landmarks() {
   return (

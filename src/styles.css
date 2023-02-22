@@ -1,0 +1,125 @@
+/* APP COLOR STYLES TESTING */
+/* COLOR PALETTE */
+:root {
+  --headingOne: #333;
+  --headingTwo: #333;
+  --headingThree: #444;
+  --cardsHeading: #444;
+
+  --paragraphs: #111;
+  --cardsPara: #111;
+
+  --lingoLensPara: #111;
+  --lingoLensBackground: #d3d4d3;
+
+  --mainBackground: #cfc7c7;
+  --darkBackground: #3c0d15;
+  --cardsBackground: #b8b8b8;
+
+  --cardsButtons: #333;
+  --cardsButtonsPara: #ddd;
+  --submitButtons: #333;
+  --submitButtonsPara: #ddd;
+  --bordersColor: #777;
+  --sidebarButton: #000;
+
+  --roamersInputField: #000;
+  --roamersCardText: #000;
+}
+
+/* SUBMIT/TRANSLATE BUTTONS fOR LingoLens and Roamer's Rates */
+.css-5uwxdw,
+.css-1h078ev {
+  color: var(--submitButtonsPara) !important;
+  background-color: var(--submitButtons) !important;
+}
+/* SIDEBAR BUTTON */
+.css-1b15pz3 button {
+  color: var(--sidebarButton);
+}
+
+/*****  MAIN PAGE ******/
+#root {
+  background-color: var(--mainBackground);
+}
+.globeImg {
+  filter: invert(0);
+}
+h1,
+footer {
+  color: var(--headingOne);
+}
+p {
+  color: var(--paragraphs);
+}
+h2 {
+  color: var(--headingTwo);
+}
+h3 {
+  color: var(--headingThree);
+}
+/* MAIN PAGE CARDS */
+.css-1xbp2a9 .css-gmuwbf .chakra-card {
+  background-color: var(--cardsBackground) !important;
+  opacity: 1 !important;
+}
+
+/* CARDS HEADINGS */
+.css-1xbp2a9 .css-gmuwbf .chakra-card h2 {
+  color: var(--cardsHeading) !important;
+}
+/* CARDS PARAGRAPHS */
+.css-1xbp2a9 .css-gmuwbf .chakra-card p {
+  color: var(--cardsPara) !important;
+}
+
+/* CARDS BUTTONS */
+.css-5uwxdw {
+  color: var(--cardsButtonsPara) !important;
+  background-color: var(--cardsButtons) !important;
+}
+
+/***** TRANSLATE SECTION *****/
+/* CHAKRA CARD RIGHT SIDE */
+.css-1kt7lr3,
+.css-1kt7lr3 div p {
+  color: var(--lingoLensPara) !important;
+  background-color: var(--lingoLensBackground) !important;
+  border: none !important;
+}
+::placeholder {
+  color: var(--lingoLensPara) !important;
+}
+textarea {
+  color: var(--lingoLensPara) !important;
+  background-color: var(--lingoLensBackground) !important;
+  border: none !important;
+}
+/* HEADINGS: Original Text, Detected Language, Translated Text */
+.css-oxz472 {
+  color: var(--headingThree) !important;
+}
+.chakra-table {
+  color: var(--paragraphs) !important;
+}
+/* TABLE BORDERS */
+.css-1wm2rb8,
+.css-oxz472 {
+  border-color: var(--bordersColor) !important;
+}
+
+/***** ROAMER'S RATES STYLING *****/
+/* FORM HEADINGS | Amount, From, To */
+.css-n139je {
+  color: var(--headingThree);
+}
+/* FORM INPUT FIELD */
+.css-1kp110w {
+  border-color: var(--roamersInputField) !important;
+}
+/* Text of Card */
+.css-ofelfh p {
+  color: var(--roamersCardText) !important;
+}
+
+/* END OF APP COLOR STYLES TESTING */
