@@ -21,6 +21,7 @@ function LocalInfo() {
   const [storedSearchData, setStoredSearchData] = useState({});
   const [formInput, setFormInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [apiErrorRequest, setApiErrorRequest] = useState(false);
 
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem('gt_city_search'));
@@ -114,36 +115,61 @@ function LocalInfo() {
         );
 
         // get image data
-        // uSplash API: https://api.unsplash.com/
-        // Access key: 6fEh-7tXr4Bzr12yxHDIN93ZeDnhTWDnRIZ49nxMRtY
-        // Secret Key: 6JpWEchohX37O7UTFdTJOSOzw-h2oWcJAMJ1MCvuL9Q
-        const clientID = '6fEh-7tXr4Bzr12yxHDIN93ZeDnhTWDnRIZ49nxMRtY';
-        const endpoint = `https://api.unsplash.com/search/photos?query=${formInput}&per_page=1&client_id=${clientID}&orientation=landscape`;
-        const imageResponse = await axios.get(endpoint);
-        console.log('getImageResponse', imageResponse.data);
+        let chosenImgUrl =
+          'https://images.unsplash.com/photo-1519987856251-45aa3d9171ad?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1393&q=80';
+        try {
+          // uSplash API: https://api.unsplash.com/
+          // Access key: 6fEh-7tXr4Bzr12yxHDIN93ZeDnhTWDnRIZ49nxMRtY
+          // Secret Key: 6JpWEchohX37O7UTFdTJOSOzw-h2oWcJAMJ1MCvuL9Q
+          const clientID = '6fEh-7tXr4Bzr12yxHDIN93ZeDnhTWDnRIZ49nxMRtY';
+          const endpoint = `https://api.unsplash.com/search/photos?query=${formInput}&per_page=1&client_id=${clientID}&orientation=landscape`;
+          const imageResponse = await axios.get(endpoint);
 
-        const params = {
-          q: geoResponse.data[0].name,
-          apiKey: '66a24015f83f414aad84ea0d18eaaccd',
-          sources: 'associated-press,cnn,bbc-news,reuters,time',
-          pageSize: 10,
-          language: 'en',
-          sortBy: 'relevancy',
-          searchIn: 'title,description,content',
-        };
+          // don't need to deal with bad response here as
+          // it throws an error automatically and so is dealt by catch
 
-        const apiUrl = `https://newsapi.org/v2/everything?q=${params.q}&apiKey=${params.apiKey}&sources=${params.sources}&pageSize=${params.pageSize}&language=en&sortBy=relevancy&searchIn=${params.searchIn}`;
+          console.log('getImageResponse', imageResponse.data);
 
-        const urlString = `https://api.allorigins.win/get?url=${encodeURIComponent(
-          apiUrl
-        )}`;
+          chosenImgUrl = imageResponse.data.results[0].urls.regular;
+        } catch (error) {
+          console.log(error);
+        }
 
         // get news data
-        const response = await axios.get(urlString);
-        // console.log('newsResponse', response.data);
+        let articles = [];
+        try {
+          const params = {
+            q: geoResponse.data[0].name,
+            apiKey: '66a24015f83f414aad84ea0d18eaaccd',
+            sources: 'associated-press,cnn,bbc-news,reuters,time',
+            pageSize: 10,
+            language: 'en',
+            sortBy: 'relevancy',
+            searchIn: 'title,description,content',
+          };
 
-        const newsResponse = JSON.parse(response.data.contents);
-        console.log('newsResponse', newsResponse);
+          const apiUrl = `https://newsapi.org/v2/everything?q=${params.q}&apiKey=${params.apiKey}&sources=${params.sources}&pageSize=${params.pageSize}&language=${params.language}&sortBy=${params.sortBy}&searchIn=${params.searchIn}`;
+
+          // hack
+          const urlString = `https://api.allorigins.win/get?url=${encodeURIComponent(
+            apiUrl
+          )}`;
+
+          const jsonNewsResponse = await axios.get(urlString);
+          const newsResponse = JSON.parse(jsonNewsResponse.data.contents);
+
+          console.log('newsResponse', newsResponse);
+
+          if (newsResponse.status === 'error') {
+            throw new Error(newsResponse.message);
+          }
+
+          if (newsResponse.status === 'ok') {
+            articles = newsResponse.articles;
+          }
+        } catch (error) {
+          console.log(error);
+        }
         // store data
         cityObjToStore = {
           cityName: geoResponse.data[0].name,
@@ -158,8 +184,8 @@ function LocalInfo() {
               .charAt(0)
               .toUpperCase() +
             weatherAndTimeZoneResponse.data.weather[0].description.slice(1),
-          imageUrl: imageResponse.data.results[0].urls.regular,
-          articles: newsResponse.articles,
+          imageUrl: chosenImgUrl,
+          articles: articles,
           emergencyNumber: getEmergencyNumber(geoResponse.data[0].country),
         };
         localStorage.setItem('gt_city_search', JSON.stringify(cityObjToStore));
@@ -167,6 +193,7 @@ function LocalInfo() {
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
+        setApiErrorRequest(true);
         console.log(error);
       }
     };
@@ -227,6 +254,11 @@ function LocalInfo() {
         {isLoading && (
           <Flex justify='center'>
             <Spinner />
+          </Flex>
+        )}
+        {apiErrorRequest && (
+          <Flex justify='center'>
+            <Text>There was an error fetching the data from the API.</Text>
           </Flex>
         )}
         {Object.keys(storedSearchData).length > 0 && (
