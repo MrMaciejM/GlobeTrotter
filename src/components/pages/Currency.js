@@ -1,37 +1,37 @@
-import { Container, Heading, SimpleGrid, Box, Center } from "@chakra-ui/layout";
-import { FormLabel } from "@chakra-ui/form-control";
-import { Input } from "@chakra-ui/input";
-import { Button } from "@chakra-ui/button";
-import { motion } from "framer-motion";
+import { Container, Heading, SimpleGrid, Box, Center } from '@chakra-ui/layout';
+import { FormLabel } from '@chakra-ui/form-control';
+import { Input } from '@chakra-ui/input';
+import { Button } from '@chakra-ui/button';
+import { motion } from 'framer-motion';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
-import { useForm } from "react-hook-form";
+import { useForm } from 'react-hook-form';
 
-import exchangeIcon from "../icons/exchange.gif";
-import CurrencyConversionCard from "../CurrencyConvertCard";
+import exchangeIcon from '../icons/exchange.gif';
+import CurrencyConversionCard from '../CurrencyConvertCard';
 
-import RecentConversionsTable from "../RecentConversionsTable";
-import { setLocalStorage_RecentConversions } from "../helperFuncs/setLocalStorage_RecentConversions";
+import RecentConversionsTable from '../RecentConversionsTable';
+import { setLocalStorage_RecentConversions } from '../helperFuncs/setLocalStorage_RecentConversions';
 
 const containerVariants = {
   hidden: {
     opacity: 0,
-    x: "100vw",
+    x: '100vw',
   },
   visible: {
     opacity: 1,
     x: 0,
     transition: {
-      type: "spring",
+      type: 'spring',
       mass: 0.4,
       damping: 8,
     },
   },
   exit: {
-    x: "-100vw",
+    x: '-100vw',
     transition: {
-      ease: "easeInOut",
+      ease: 'easeInOut',
     },
   },
 };
@@ -49,71 +49,75 @@ const containerVariants = {
 // and update the API key.
 
 function Currency() {
-  const [amount, setAmount] = useState("");
-  const [countryFrom, setCountryFrom] = useState("");
-  const [countryTo, setCountryTo] = useState("");
-  const [currencyRate, setCurrencyRate] = useState("");
-  const [exchangedRate, setExchangedRate] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
-  const [fetchMsg, setFetchMsg] = useState("");
+  const [amount, setAmount] = useState(null);
+  const [countryFrom, setCountryFrom] = useState('');
+  const [countryTo, setCountryTo] = useState('');
+  const [currencyRate, setCurrencyRate] = useState(null);
+  const [exchangedRate, setExchangedRate] = useState(null);
+  const [errorMsg, setErrorMsg] = useState('');
+  const [fetchMsg, setFetchMsg] = useState('');
 
   const {
     register,
     handleSubmit,
-    watch,
+    reset,
     formState: { errors },
   } = useForm();
 
   const [isLoadingBtn, setIsLoadingBtn] = useState(false);
 
-  useEffect( () => {
-    setIsLoadingBtn(false)
+  useEffect(() => {
+    setIsLoadingBtn(false);
   }, []);
 
   const [tableData, setTableData] = useState([]);
 
-  useEffect( () => {
-    setTableData(JSON.parse(localStorage.getItem("RecentConversions")) || []);
+  useEffect(() => {
+    setTableData(JSON.parse(localStorage.getItem('RecentConversions')) || []);
   }, []);
 
   // form
-  const formSubmitHandler = (e) => {
-    // e.preventDefault();
+  const formSubmitHandler = (values) => {
+    console.log(values);
 
-    console.log(e);
+    setAmount(null);
+    setCountryFrom('');
+    setCountryTo('');
+    setCurrencyRate(null);
+    setExchangedRate(null);
 
     setIsLoadingBtn(true);
 
     // api call for currency
     var myHeaders = new Headers();
 
-    myHeaders.append("apikey", "FDgSxXu1TaCZI2YISHhQP39qI4wi3auC");
+    myHeaders.append('apikey', 'FDgSxXu1TaCZI2YISHhQP39qI4wi3auC');
 
     // API keys in order of usage:
     // hZn9Q1SDwhkak9rt1BHg0Iw018U8OgTl - <= 20 times used
 
     var requestOptions = {
-      method: "GET",
-      redirect: "follow",
+      method: 'GET',
+      redirect: 'follow',
       headers: myHeaders,
     };
 
     fetch(
-      `https://api.apilayer.com/fixer/convert?to=${e.toRequired}&from=${e.fromRequired}&amount=${e.amountRequired}`,
+      `https://api.apilayer.com/fixer/convert?to=${values.toRequired}&from=${values.fromRequired}&amount=${values.amountRequired}`,
 
       requestOptions
       //setFetchMsg("Fetching... please wait")
     )
       .then((response) => response.json())
       .then((data) => {
-
         console.log(data);
         let resultRate = data.info.rate; // dont know why they are let but dont want to waste api calls testing
         let resultExchangedRate = data.result; // dont know why they are let but dont want to waste api calls testing
         let amount = data.query.amount; // dont know why they are let but dont want to waste api calls testing
 
         const resultRateRounded = parseFloat(resultRate).toFixed(2);
-        const resultExchangedRateRounded = parseFloat(resultExchangedRate).toFixed(2);
+        const resultExchangedRateRounded =
+          parseFloat(resultExchangedRate).toFixed(2);
         const amountRounded = parseFloat(amount).toFixed(2);
 
         const updatedTableData = setLocalStorage_RecentConversions(
@@ -123,115 +127,105 @@ function Currency() {
         );
 
         setTimeout(() => {
+          reset();
           setCurrencyRate(resultRateRounded);
           setExchangedRate(resultExchangedRateRounded);
-          setFetchMsg("Request completed");
-          setErrorMsg("");
+          setFetchMsg('Request completed');
+          setErrorMsg('');
           setTableData(updatedTableData);
           setIsLoadingBtn(false);
+          setAmount(values.amountRequired);
+          setCountryFrom(values.fromRequired.toUpperCase());
+          setCountryTo(values.toRequired.toUpperCase());
         }, 5000);
       })
       .catch((error) => {
         // error msg
         setTimeout(() => {
+          reset();
           console.log(error);
-          setFetchMsg("");
+          setFetchMsg('');
           setIsLoadingBtn(false);
-          setErrorMsg("Error: failed to fetch, please try again in a moment.");
+          setErrorMsg('Error: failed to fetch, please try again in a moment.');
         }, 5000);
       });
-
-    setAmount(amount);
-    setCountryFrom(countryFrom);
-    setCountryTo(countryTo);
   };
 
   return (
     <motion.main
       variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      exit="exit"
+      initial='hidden'
+      animate='visible'
+      exit='exit'
     >
-      <Container p="10px" maxW="100vw" as="section" className="currencyMain">
-        <Heading as="h2" mb="8" textAlign="center">
+      <Container p='10px' maxW='100vw' as='section' className='currencyMain'>
+        <Heading as='h2' mb='8' textAlign='center'>
           Roamers' Rates
         </Heading>
 
-        <SimpleGrid minChildWidth="350px">
-          <Box m="2" display="flex" justifyContent="center" alignItems="center">
-            <form as="form" onSubmit={handleSubmit(formSubmitHandler)}>
+        <SimpleGrid minChildWidth='350px'>
+          <Box m='2' display='flex' justifyContent='center' alignItems='center'>
+            <form as='form' onSubmit={handleSubmit(formSubmitHandler)}>
               <Box
-                px="2"
-                display="flex"
-                flexDirection="column"
-                justifyContent="center"
-                alignItems="center"
-                gap="2"
+                px='2'
+                display='flex'
+                flexDirection='column'
+                justifyContent='center'
+                alignItems='center'
+                gap='2'
               >
-                <FormLabel minW="300px">
+                <FormLabel minW='300px'>
                   Amount
                   <Input
-                    id="amount"
                     isRequired={true}
-                    {...register("amountRequired", { required: true })}
-                    onChange={(e) => {
-                      setAmount(e.target.value);
-                    }}
-                    type="number"
-                    placeholder="0"
+                    {...register('amountRequired', { required: true })}
+                    type='number'
+                    placeholder='0'
                   />
                 </FormLabel>
 
-                <FormLabel minW="300px">
+                <FormLabel minW='300px'>
                   From
                   <Input
-                    id="from"
                     isRequired={true}
-                    {...register("fromRequired", { required: true })}
-                    onChange={(e) => {
-                      setCountryFrom(e.target.value.toUpperCase());
-                    }}
-                    type="text"
-                    placeholder="EUR"
+                    {...register('fromRequired', { required: true })}
+                    type='text'
+                    placeholder='EUR'
                   />
                 </FormLabel>
 
-                <FormLabel minW="300px">
+                <FormLabel minW='300px'>
                   To
                   <Input
-                    id="to"
+                    id='to'
                     isRequired={true}
-                    {...register("toRequired", { required: true })}
-                    onChange={(e) => {
-                      setCountryTo(e.target.value.toUpperCase());
-                    }}
-                    type="text"
-                    placeholder="GBP"
+                    {...register('toRequired', { required: true })}
+                    type='text'
+                    placeholder='GBP'
                   />
                 </FormLabel>
 
                 <Button
-                  colorScheme="whiteAlpha"
-                  maxW="350px"
+                  colorScheme='whiteAlpha'
+                  maxW='350px'
                   isLoading={isLoadingBtn}
-                  loadingText="Fetching Data..."
-                  spinnerPlacement="end"
-                  my="5"
-                  type="submit"
-                  value="Convert"
+                  loadingText='Fetching Data...'
+                  spinnerPlacement='end'
+                  my='5'
+                  type='submit'
+                  value='Convert'
                   spinner={
                     <img
-                      style={{ maxHeight: "3ch" }}
+                      style={{ maxHeight: '3ch' }}
                       src={exchangeIcon}
-                      alt="loading"
+                      alt='loading'
                     />
                   }
                 >
                   Submit
                 </Button>
                 <p
-                  className="fetchMsg"
+                  className='fetchMsg'
                   onChange={() => {
                     setFetchMsg(fetchMsg);
                   }}
@@ -239,7 +233,7 @@ function Currency() {
                   {fetchMsg}
                 </p>
                 <p
-                  className="errorMsg"
+                  className='errorMsg'
                   onChange={() => {
                     setErrorMsg(errorMsg);
                   }}
@@ -253,15 +247,16 @@ function Currency() {
           {/* currency dashboard */}
           <Center>
             <CurrencyConversionCard
-              fromCurrency={countryFrom || "USD"}
-              toCurrency={countryTo || "GBP"}
-              amount={amount || 0}
-              result={exchangedRate || 0}
-              exRate={currencyRate || 0}
+              fromCurrency={countryFrom}
+              toCurrency={countryTo}
+              amount={amount}
+              result={exchangedRate}
+              exRate={currencyRate}
+              isLoading={isLoadingBtn}
             />
           </Center>
         </SimpleGrid>
-        <Center mx="auto" my="10" maxW="800px">
+        <Center mx='auto' my='10' maxW='800px'>
           <RecentConversionsTable tableData={tableData} />
         </Center>
       </Container>
