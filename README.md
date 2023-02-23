@@ -1,6 +1,6 @@
 <a name="top"></a>
 
-# Globe Trotter
+# GlobeTrotter
 
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![Chakra](https://img.shields.io/badge/chakra-%234ED1C5.svg?style=for-the-badge&logo=chakraui&logoColor=white) ![Framer](https://img.shields.io/badge/Framer-black?style=for-the-badge&logo=framer&logoColor=blue) ![Firebase](https://img.shields.io/badge/Firebase-039BE5?style=for-the-badge&logo=Firebase&logoColor=white) ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white) <img alt='moment.js badge' src='https://shields.io/badge/Moment.js-grey?logo=appveyor&style=for-the-badge'> ![React Hook Form](https://img.shields.io/badge/React%20Hook%20Form-%23EC5990.svg?style=for-the-badge&logo=reacthookform&logoColor=white)
 
@@ -12,6 +12,9 @@ Globe Trotter was created to be a companion app for travellers. It includes a cu
 
 ## Table of contents
 
+
+- [User Story](#User-Story)
+- [Acceptance Criteria](#Acceptance-Criteria)
 - [Getting Started](#getting-started)
 - [What I Learned](#what-we-learned)
 - [Selected Features](#selected-features)
@@ -19,6 +22,44 @@ Globe Trotter was created to be a companion app for travellers. It includes a cu
 - [Contribution](#contribution)
 - [Credits](#credits)
 - [Licence](#licence)
+
+## User Story
+
+```
+As a travel enthusiast, I want convenient access to resources that simplify my journey, so that I can have a stress-free holiday experience and be well prepared for any disruptions.
+```
+
+## Acceptance Criteria
+
+```
+GIVEN a travel-oriented web application
+
+WHEN the page loads
+THEN I am presented with the following with a polished and responsive UI:
+An inspiring banner that gives me confidence in the app
+The ability to search for a city
+Information about the city I recently searched and the ability to clear searched city
+Get some popular travel ideas
+The ability to navigate easily between pages
+
+WHEN I search for a city
+THEN the city is saved and I am presented with the following information:
+City name and country
+Current weather
+Current time and date
+Local emergency services number
+News relating to the city
+
+WHEN I navigate to the translation page
+THEN I am presented with a form that will allow me to submit  text in a foreign language and receive the english translation and what language the original text is in. The recent translation details also have to persist between page loads.
+
+WHEN I navigate to the currency convertor page
+THEN I am presented with a form that will allow me to submit the amount and currencies to convert, and receive the converted amount and the conversion rate. This data along with the date of the information has to be stored on my device and persist between page loads for recent queries.
+
+WHEN I try to access a page that does not exist
+THEN I am informed that the page does not exist, but also feel more connected with the application’s branding.
+
+```
 
 ## Getting started
 
