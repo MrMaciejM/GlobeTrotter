@@ -8,15 +8,14 @@
 
 ## Description
 
-Globe Trotter was created to be a companion app for travellers. It includes a currency conversion tool, a translation tool which detects the input language and converts to English,   and an information tool which allows users to search for cities and see various information, such as the current time, weather, emergency services number and third party links to a selection of news articles. 
+Globe Trotter was created to be a companion app for travellers. It includes a currency conversion tool, a translation tool which detects the input language and converts to English, and an information tool which allows users to search for cities and see various information, such as the current time, weather, emergency services number and third party links to a selection of news articles.
 
 ## Table of contents
 
-
-- [User Story](#User-Story)
-- [Acceptance Criteria](#Acceptance-Criteria)
+- [User Story](#user-story)
+- [Acceptance Criteria](#acceptance-criteria)
 - [Getting Started](#getting-started)
-- [What I Learned](#what-we-learned)
+- [What We Learned](#what-we-learned)
 - [Selected Features](#selected-features)
 - [Limitations and Future Enhancements](#limitations-and-future-enhancements)
 - [Contribution](#contribution)
@@ -63,16 +62,30 @@ THEN I am informed that the page does not exist, but also feel more connected wi
 
 ## Getting started
 
-Download or clone the repository which can be found [here on GitHub](https://github.com/MrMaciejM/GlobeTrotter) and run the following command to install required dependancies
+To view the deployed application visit the [Globe Trotter app](https://globetrotterreact.netlify.app/).
+
+Alternatively, to run the app locally, download or clone the repository which can be found [here on GitHub](https://github.com/MrMaciejM/GlobeTrotter) and run the following command to install required dependencies
 
 ```
 npm i
 ```
 
-If you are new to React it is recommended to review the [React README](https://github.com/facebook/create-react-app/blob/main/packages/cra-template/template/README.md). 
+If you are new to React it is recommended to review the [React README](https://github.com/facebook/create-react-app/blob/main/packages/cra-template/template/README.md).
 
-To access the deployed application visit the [Globe Trotter app](https://globetrotterreact.netlify.app/) 
+## What we learned
 
+During this project, we gained valuable experience in various areas, including:
+
+- Organizing and structuring a React application to improve code maintainability and scalability
+- Writing JSX code to render dynamic user interfaces and enhance front-end browser functionality
+- Working with multiple APIs in an efficient and error-resistant manner to fetch and manipulate data
+- Leveraging third-party libraries, such as React Hook Forms, Moment, and Axios, to simplify complex tasks and speed up development
+- Exploring a new CSS framework (Chakra UI) to create visually appealing and responsive user interfaces
+- Implementing a real-time chat feature using Firebase, a cloud-based NoSQL database, to enhance user engagement and collaboration
+- Enhancing the user experience by incorporating small animations when navigating between different pages
+- Deploying the web app to Netlify, a cloud-based platform for continuous deployment and hosting, to make it accessible to a wider audience.
+
+Overall, this project provided us with a comprehensive understanding of modern web development tools and techniques, and gave us the opportunity to apply our knowledge in a practical setting. We look forward to using these skills in future projects and continuing to improve our abilities as developers.
 
 ## Selected Features
 
@@ -80,7 +93,7 @@ To access the deployed application visit the [Globe Trotter app](https://globetr
 
 ![Translation Tool](./public/images/translation.gif)
 
-The translation tool allows users to input words or phrases for translation. The app detects the language of the text and translates to English. Previous searches are saved to local storage and displayed in a tabular format. 
+The translation tool allows users to input words or phrases for translation. The app detects the language of the text and translates to English. Previous searches are saved to local storage and displayed in a tabular format.
 
 ### Currency Conversion
 
@@ -96,15 +109,21 @@ The city search tool allows users to input a city name and retrieve information 
 
 ## Limitations and Future Enhancements
 
-### Current Limitations
+Despite the progress we've made, there are still some limitations to our web app that we could address:
 
-- Currency converter tool will only return results if a recognised short form currency code is used (e.g. USD)
-- Translation tool currently only translates into English
+- The code could be refactored to improve its readability and organization, particularly in terms of breaking down larger components into smaller ones and creating folders for helper utils, data, and pages.
+- The currency converter tool only accepts recognized short-form currency codes, such as USD or EUR. We plan to expand its functionality to accept more currency codes in the future.
+- The translation tool only translates into English at this time, which may limit its usefulness for non-English-speaking users.
 
-### Future Enhancements
+Moving forward, we could further develop and enhance our web app by:
 
-- Allow users to search using the country name if they do not know the country's currency
-- Allow translation from English to a user selected language
+- Refactoring and cleaning up the code base to improve its organization and readability. This will involve breaking down larger components into smaller ones where appropriate and creating separate folders for helper utils, data, and pages.
+- Integrating the city search feature with the translation and currency tools so that users can be prompted to use the appropriate currency and language for their location.
+- Allowing users to select their preferred language for translation from English.
+- Implementing a user login system to personalize the user experience and save preferences across devices.
+- Developing the Firebase real-time database feature into a live chat functionality, allowing users to engage in real-time conversations with each other.
+
+By implementing these enhancements, we hope to make our web app more user-friendly, accessible, and useful to a wider range of users.
 
 ## Contribution
 
@@ -120,9 +139,17 @@ Please follow the guidelines for contributions:
 - Keep pull requests small and focused on a single change.
 - Include test cases for any new features or changes.
 
-If you have any questions or suggestions, feel free to contact us via [email](mailto:example@email.com).
+If you have any questions or suggestions, feel free to contact us - we're on GitHub!
+
+- <a href="https://github.com/AywinK">Aywin</a>
+- <a href="https://github.com/DarrenOxley7">Darren</a>
+- <a href="https://github.com/MrMaciejM">Maciej</a>
+- <a href="https://github.com/shisinbin">Shivraj</a>
 
 ## Credits
+
+- <a href="https://reactjs.org/">React</a>
+- <a href="https://chakra-ui.com/">Chakra UI</a>
 
 ## Licence
 
@@ -146,8 +173,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-
 Copyright (c) 2023 React Wizards
+
 <p align="right">
   <a href="#top">Back to top</a>
 </p>
