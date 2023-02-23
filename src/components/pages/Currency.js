@@ -87,7 +87,7 @@ function Currency() {
     // api call for currency
     var myHeaders = new Headers();
 
-    myHeaders.append("apikey", "zc3JTW1T9N9AYev9FEyKGDLryG7QPonb");
+    myHeaders.append("apikey", "FDgSxXu1TaCZI2YISHhQP39qI4wi3auC");
 
     // API keys in order of usage:
     // hZn9Q1SDwhkak9rt1BHg0Iw018U8OgTl - <= 20 times used

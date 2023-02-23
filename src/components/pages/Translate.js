@@ -83,7 +83,7 @@ function Translate() {
       headers: {
         "content-type": "application/x-www-form-urlencoded",
         "Accept-Encoding": "application/gzip",
-        "X-RapidAPI-Key": "48a0d43aa1mshab67cd21df07bc0p10c985jsn572f9f125bb3",
+        "X-RapidAPI-Key": "f3ac376c31mshe6a7b835230875cp150f53jsna785893eb768",
         "X-RapidAPI-Host": "google-translate1.p.rapidapi.com",
       },
       body: encodedParams,
