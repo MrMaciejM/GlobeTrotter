@@ -53,13 +53,10 @@ function Sidebar() {
                                 <Button variant="ghost" className="sidebarBtn" minW="100%">Home</Button>
                             </Link>
                             <Link to="/translate" onClick={onClose}>
-                                <Button variant="ghost" className="sidebarBtn" minW="100%">Translate</Button>
+                                <Button variant="ghost" className="sidebarBtn" minW="100%">LingoLens</Button>
                             </Link>
                             <Link to="/currency" onClick={onClose}>
-                                <Button variant="ghost" className="sidebarBtn" minW="100%">Currency</Button>
-                            </Link>
-                            <Link to="/landmarks" onClick={onClose}>
-                                <Button variant="ghost" className="sidebarBtn" minW="100%">Landmarks</Button>
+                                <Button variant="ghost" className="sidebarBtn" minW="100%">Roamers' Rates</Button>
                             </Link>
                         </Flex>
                     </DrawerBody>

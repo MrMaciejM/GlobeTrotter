@@ -5,16 +5,12 @@ import { motion } from "framer-motion";
 
 function Header() {
   const stylesObj = {
-    header: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      padding: "2px 5px",
-    },
-    Sidebar: {
-      padding: "5px",
-    },
-    h1: {},
+    // backgroundImage: "linear-gradient(350deg, var(--customBlue), var(--customPurple))",
+    backgroundColor: "var(--mainBackground)",
+    opacity: "1",
+    position: "fixed",
+    width: "100vw",
+    zIndex: "2"
   };
 
   return (
@@ -22,6 +18,7 @@ function Header() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeInOut" }}
+      style={stylesObj}
     >
       <Flex
         as="header"

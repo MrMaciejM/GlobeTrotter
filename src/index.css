@@ -13,10 +13,6 @@ html {
   overflow-x: hidden !important;
 }
 
-body {
-  /* min-width: 380px; */
-}
-
 /* base styles */
 #root {
   background-color: lightskyblue;
