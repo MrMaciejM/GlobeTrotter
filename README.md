@@ -150,6 +150,14 @@ If you have any questions or suggestions, feel free to contact us - we're on Git
 
 - <a href="https://reactjs.org/">React</a>
 - <a href="https://chakra-ui.com/">Chakra UI</a>
+- <a href="https://firebase.google.com/docs/database">Firebase Realtime Database Docs</a>
+- <a href="https://react-hook-form.com/get-started">React Hook Form</a>
+- <a href="https://docs.netlify.com/">Netlify Docs</a>
+- <a href="https://rapidapi.com/hub">Rapid API for google translate api</a>
+- <a href="https://reactrouter.com/en/main">React Router Docs</a>
+- <a href="https://chat.openai.com/chat">ChatGPT (learning new technologies)</a>
+- <a href="https://www.framer.com/motion/">Framer Motion Docs</a>
+- <a href="https://nodejs.org/en/docs/">Node.js Docs</a>
 
 ## Licence
 
